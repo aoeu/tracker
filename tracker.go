@@ -46,7 +46,7 @@ func (p Pattern) GetLine(offset int) Line {
 	l := make(Line, len(p))
 	for i, track := range p {
 		switch {
-		case len(track) < offset:
+		case len(track) > offset:
 			l[i] = track[offset]
 		default:
 			l[i] = Event{}

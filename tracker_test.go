@@ -27,6 +27,23 @@ var testPattern = Pattern{
 	},
 }
 
+func TestGetLines(t *testing.T) {
+	lines := testPattern.GetLines()
+	if len(lines) != 5 {
+		t.Error("Expected 5 Lines but actual was %v", len(lines))
+	}
+}
+
+func TestGetLine(t *testing.T) {
+	for i := 0; i < 5; i++ {
+		line := testPattern.GetLine(i)
+		if len(line) != len(testPattern) {
+			t.Error("Expeceted %v Events in Line but actual was %v",
+				len(testPattern), len(line))
+		}
+	}
+}
+
 func TestNothing(t *testing.T) {
 	// TODO(aoeu): Remove after actually implementing tests.
 	fmt.Println(testPattern)
