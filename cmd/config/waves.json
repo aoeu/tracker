@@ -1,0 +1,466 @@
+[
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/MC/MC25.WAV",
+        "NoteNum": 0
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/MC/MC10.WAV",
+        "NoteNum": 1
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/MC/MC75.WAV",
+        "NoteNum": 2
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/MC/MC00.WAV",
+        "NoteNum": 3
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/MC/MC50.WAV",
+        "NoteNum": 4
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/LT/LT10.WAV",
+        "NoteNum": 5
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/LT/LT25.WAV",
+        "NoteNum": 6
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/LT/LT75.WAV",
+        "NoteNum": 7
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/LT/LT50.WAV",
+        "NoteNum": 8
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/LT/LT00.WAV",
+        "NoteNum": 9
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/HC/HC75.WAV",
+        "NoteNum": 10
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/HC/HC50.WAV",
+        "NoteNum": 11
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/HC/HC25.WAV",
+        "NoteNum": 12
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/HC/HC00.WAV",
+        "NoteNum": 13
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/HC/HC10.WAV",
+        "NoteNum": 14
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY5050.WAV",
+        "NoteNum": 15
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY2575.WAV",
+        "NoteNum": 16
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY1075.WAV",
+        "NoteNum": 17
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY2510.WAV",
+        "NoteNum": 18
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY7500.WAV",
+        "NoteNum": 19
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY2500.WAV",
+        "NoteNum": 20
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY2525.WAV",
+        "NoteNum": 21
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY0050.WAV",
+        "NoteNum": 22
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY0000.WAV",
+        "NoteNum": 23
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY0010.WAV",
+        "NoteNum": 24
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY5010.WAV",
+        "NoteNum": 25
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY7510.WAV",
+        "NoteNum": 26
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY2550.WAV",
+        "NoteNum": 27
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY5025.WAV",
+        "NoteNum": 28
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY7575.WAV",
+        "NoteNum": 29
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY0075.WAV",
+        "NoteNum": 30
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY1010.WAV",
+        "NoteNum": 31
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY5075.WAV",
+        "NoteNum": 32
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY1025.WAV",
+        "NoteNum": 33
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY7550.WAV",
+        "NoteNum": 34
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY1000.WAV",
+        "NoteNum": 35
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY5000.WAV",
+        "NoteNum": 36
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY1050.WAV",
+        "NoteNum": 37
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY7525.WAV",
+        "NoteNum": 38
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY0025.WAV",
+        "NoteNum": 39
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD0075.WAV",
+        "NoteNum": 40
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD5075.WAV",
+        "NoteNum": 41
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD5050.WAV",
+        "NoteNum": 42
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD7550.WAV",
+        "NoteNum": 43
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD7575.WAV",
+        "NoteNum": 44
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD5000.WAV",
+        "NoteNum": 45
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD1025.WAV",
+        "NoteNum": 46
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD1075.WAV",
+        "NoteNum": 47
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD2525.WAV",
+        "NoteNum": 48
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD7500.WAV",
+        "NoteNum": 49
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD7510.WAV",
+        "NoteNum": 50
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD1000.WAV",
+        "NoteNum": 51
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD2510.WAV",
+        "NoteNum": 52
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD0010.WAV",
+        "NoteNum": 53
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD0050.WAV",
+        "NoteNum": 54
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD1010.WAV",
+        "NoteNum": 55
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD2500.WAV",
+        "NoteNum": 56
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD0025.WAV",
+        "NoteNum": 57
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD5010.WAV",
+        "NoteNum": 58
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD2550.WAV",
+        "NoteNum": 59
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD0000.WAV",
+        "NoteNum": 60
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD7525.WAV",
+        "NoteNum": 61
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD2575.WAV",
+        "NoteNum": 62
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD1050.WAV",
+        "NoteNum": 63
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD5025.WAV",
+        "NoteNum": 64
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/LC/LC25.WAV",
+        "NoteNum": 65
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/LC/LC75.WAV",
+        "NoteNum": 66
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/LC/LC00.WAV",
+        "NoteNum": 67
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/LC/LC10.WAV",
+        "NoteNum": 68
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/LC/LC50.WAV",
+        "NoteNum": 69
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CB/CB.WAV",
+        "NoteNum": 70
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/RS/RS.WAV",
+        "NoteNum": 71
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CH/CH.WAV",
+        "NoteNum": 72
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CP/CP.WAV",
+        "NoteNum": 73
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/MA/MA.WAV",
+        "NoteNum": 74
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/OH/OH00.WAV",
+        "NoteNum": 75
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/OH/OH75.WAV",
+        "NoteNum": 76
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/OH/OH50.WAV",
+        "NoteNum": 77
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/OH/OH10.WAV",
+        "NoteNum": 78
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/OH/OH25.WAV",
+        "NoteNum": 79
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/HT/HT75.WAV",
+        "NoteNum": 80
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/HT/HT50.WAV",
+        "NoteNum": 81
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/HT/HT00.WAV",
+        "NoteNum": 82
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/HT/HT10.WAV",
+        "NoteNum": 83
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/HT/HT25.WAV",
+        "NoteNum": 84
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/MT/MT75.WAV",
+        "NoteNum": 85
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/MT/MT25.WAV",
+        "NoteNum": 86
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/MT/MT00.WAV",
+        "NoteNum": 87
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/MT/MT50.WAV",
+        "NoteNum": 88
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/MT/MT10.WAV",
+        "NoteNum": 89
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD7510.WAV",
+        "NoteNum": 90
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD2510.WAV",
+        "NoteNum": 91
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD5010.WAV",
+        "NoteNum": 92
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD1010.WAV",
+        "NoteNum": 93
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD5050.WAV",
+        "NoteNum": 94
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD7525.WAV",
+        "NoteNum": 95
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD1075.WAV",
+        "NoteNum": 96
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD2575.WAV",
+        "NoteNum": 97
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD7500.WAV",
+        "NoteNum": 98
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD0075.WAV",
+        "NoteNum": 99
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD0000.WAV",
+        "NoteNum": 100
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD1050.WAV",
+        "NoteNum": 101
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD0050.WAV",
+        "NoteNum": 102
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD2500.WAV",
+        "NoteNum": 103
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD1000.WAV",
+        "NoteNum": 104
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD5000.WAV",
+        "NoteNum": 105
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD5025.WAV",
+        "NoteNum": 106
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD7575.WAV",
+        "NoteNum": 107
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD2550.WAV",
+        "NoteNum": 108
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD5075.WAV",
+        "NoteNum": 109
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD2525.WAV",
+        "NoteNum": 110
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD1025.WAV",
+        "NoteNum": 111
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD7550.WAV",
+        "NoteNum": 112
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD0025.WAV",
+        "NoteNum": 113
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD0010.WAV",
+        "NoteNum": 114
+    },
+    {
+        "FileName": "/home/tasm/Downloads/TR808WAV/CL/CL.WAV",
+        "NoteNum": 115
+    }
+]
