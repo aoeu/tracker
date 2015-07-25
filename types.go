@@ -4,7 +4,7 @@ package tracker
 type Event struct {
 	NoteNum  int
 	Velocity int
-	*Generator
+	Generator
 }
 
 // A Generator maps to a musical device that can play an Event
@@ -37,11 +37,12 @@ func (p Pattern) maxTrackLen() int {
 func (p Pattern) minTrackLen() int {
 	// TODO(aoeu): Is this actually needed?
 	minLen := int(^uint(0) >> 1)
-	for i, track := range p {
+	for _, track := range p {
 		if len(track) < minLen {
 			minLen = len(track)
 		}
 	}
+	return minLen
 }
 
 // GetLine returns a Line containing the Events
