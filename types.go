@@ -1,5 +1,9 @@
 package tracker
 
+import (
+	"fmt"
+)
+
 // An Event represents a musical event to occur at a point in time.
 type Event struct {
 	NoteNum  int
@@ -7,9 +11,14 @@ type Event struct {
 	*Generator
 }
 
-// A Generator maps to a musical device that can play an Event
+func (e Event) String() string {
+	return fmt.Sprintf("%v %v", e.NoteNum, e.Velocity)
+}
+
+// A Generator maps to a musical device that can play an Event.
 type Generator interface {
 	Play(e Event)
+	String()
 }
 
 // A Track is a series of Events meant to be played sequentially
