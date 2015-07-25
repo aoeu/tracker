@@ -5,9 +5,9 @@ import (
 	"testing"
 )
 
-var gen1 = mockGenerator{}
-var gen2 = mockGenerator{}
-var gen3 = mockGenerator{}
+var gen1 = MockGenerator{}
+var gen2 = MockGenerator{}
+var gen3 = MockGenerator{}
 
 var testPattern = Pattern{
 	Track{

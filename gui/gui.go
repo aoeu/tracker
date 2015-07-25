@@ -71,24 +71,24 @@ func drawPattern(x, y int, p Pattern) {
 
 
 
-var gen1 = Generator{}
-var gen2 = Generator{}
-var gen3 = Generator{}
+var gen1 = MockGenerator{}
+var gen2 = MockGenerator{}
+var gen3 = MockGenerator{}
 
 var testPattern = Pattern{
-        []Track{
+        Track{
                 Event{1, 1, gen1},
                 Event{2, 1, gen1},
                 Event{3, 1, gen1},
                 Event{4, 1,  gen1},
                 Event{5, 1, gen1},
         },
-        []Track {
+        Track {
                 Event{64, 127, gen2},
                 Event{60, 127, gen2},
                Event{67, 127, gen2},
         },
-        []Track {
+        Track {
                 Event{127, 127, gen3},
         },
 }
