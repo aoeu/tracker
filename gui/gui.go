@@ -1,56 +1,176 @@
 package gui
 
 import ("github.com/nsf/termbox-go"
-			"time"
 			"fmt"
 			. "tracker")
 
+type dir int
+
+const(UP dir = iota
+		DOWN
+		LEFT
+		RIGHT)
+
 func New() {
+	c := make(chan bool)
 	termboxInit()
 	defer termbox.Close()
+	s := Screen{fg: termbox.ColorDefault, bg: termbox.ColorDefault, editMode: false}
+	go s.sFunc(c)
+	s.UserIn(c)
+}
 
-	drawPattern(2, 2, testPattern)
-	refresh()
+func (s *Screen) sFunc(c chan bool) {
+	for {
+		<-c
+		clear()
+		s.printThings()
+		refresh()
+	}
+}
+func (s *Screen) printThings() {
+	s.printEditMode()
+	s.drawTable()
+	//	s.drawCursor()
+}
 
-	time.Sleep(2*time.Second)
+func (s *Screen) drawTable() {
+	// TODO: THIS IS WRONG
+	l := testPattern.GetLines()
+	if s.editMode {
+		s.drawPattern(5, 5, s.cY, s.cX, testPattern)
+	} else {
+		for i := range l {
+			s.drawPattern(5, 5, s.cY, i, testPattern)
+		}
+	}
+}
+/*
+func (s *Screen) drawCursor() {
+	if s.editMode {
+		s.bg = termbox.ColorBlue
+		s.drawChar(s.cX, s.cY, ' ')
+		s.bg = termbox.ColorDefault
+	}
+}
+*/
+func (s *Screen) moveC(d dir) {
+	if s.editMode {
+		switch d {
+		case UP:
+			if s.cY > 0 {
+				s.cY--
+			}
+		case DOWN:
+			s.cY++
+		case RIGHT:
+			s.cX++
+		case LEFT:
+			if s.cX > 0 {
+			s.cX--
+			}
+		}
+	}
+}
 
+func (s *Screen) printEditMode() {
+	if s.editMode {
+		s.prints(1, 1, "EDIT MODE")
+	} else {
+		s.prints(1, 1, "         ")
+	}
+}
+
+type Screen struct {
+	fg, bg		termbox.Attribute
+	editMode		bool
+	cX, cY		int
+	Redraw chan bool
 }
 
 func refresh() {
 	termbox.Flush()
 }
 
+func clear() {
+	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
+}
+
 func termboxInit() {
 	termbox.Init()
 	termbox.SetInputMode(termbox.InputEsc)
-	termbox.SetOutputMode(termbox.Output256)
+//	termbox.SetOutputMode(termbox.Output256)
 }
 
-//	Prints text to the screen
-func prints(x, y int, n interface{}) {
-	drawString(x, y, fmt.Sprint(n))
-}
-
-func drawString(x, y int, s string) {
-	for i, r := range s {
-		drawChar(x + i, y, r)
+//	Prints text to the Screen
+func (s Screen) prints(x, y int, n interface{}) {
+	switch n.(type){
+	case int:
+		s.drawString(x, y, fmt.Sprintf("%3d", n))
+	default:
+		s.drawString(x, y, fmt.Sprint(n))
 	}
 }
 
-func drawChar(x, y int, r rune) {
-	termbox.SetCell(x, y, r, termbox.ColorDefault, termbox.ColorDefault)
+func (s *Screen) UserIn(c chan bool) {
+	for {
+		switch e := termbox.PollEvent(); e.Type {
+		case termbox.EventKey:
+			c <- true
+			switch e.Key {
+			case termbox.KeyEsc:
+				return
+			case termbox.KeyArrowUp:
+				s.moveC(UP)
+			case termbox.KeyArrowDown:
+				s.moveC(DOWN)
+			case termbox.KeyArrowRight:
+				s.moveC(RIGHT)
+			case termbox.KeyArrowLeft:
+				s.moveC(LEFT)
+			}
+			switch e.Ch {
+			case 'e':
+				if s.editMode {
+					s.editMode = false
+				} else {
+					s.editMode = true
+				}
+			}
+		}
+	}
+}
+
+func (s Screen) drawString(x, y int, str string) {
+	for i, r := range str {
+		s.drawChar(x + i, y, r)
+	}
+}
+
+func (s Screen) drawChar(x, y int, r rune) {
+	termbox.SetCell(x, y, r, s.fg, s.bg)
 }
 /*
-func drawEvent(x, y int, e event) {
-	prints(
+func (s *Screen) drawPlayingPattern(x, y int, i int, p Pattern) {
+	s.drawPattern(x, y, i, p)
 }
 */
-func drawPattern(x, y int, p Pattern) {
+func (s *Screen) drawPattern(x, y, hr, hc int, p Pattern) {
 	l := p.GetLines()
 	for i, v := range l {
+		s.fg = termbox.ColorBlue
+		s.bg = termbox.ColorDefault
+		s.prints(x, y + 3 + i, i)
 		for z, e := range v {
-			prints(x + (z * 10), y + 3 + i, e.NoteNum)
-			prints(x + (z * 10), y + 3 + i, e.Velocity)
+			if i == hr && z == hc {
+				s.bg = termbox.ColorRed
+			} else {
+				s.bg = termbox.ColorDefault
+			}
+			s.fg = termbox.ColorDefault
+			s.prints(x + (z * 7) + 3, y + 3 + i, e.NoteNum)
+			s.fg = termbox.ColorGreen
+			s.prints(3 + x + (z * 7) + 3, y + 3 + i, e.Velocity)
 		}
 	}
 	//	Function that calls function drawEvent to draw an event next to the previous event (from left to write)
@@ -64,12 +184,9 @@ func drawPattern(x, y int, p Pattern) {
 //	-Record table consisting of window IDs
 //	-Draw in window like normally drawing in termbox buffer
 
-
 //	NOTESTSEOTNSET
 //	Struct variable indicating "theme:
 //	Functions use current "Theme" when printing/drawing
-
-
 
 var gen1 = MockGenerator{}
 var gen2 = MockGenerator{}
@@ -91,4 +208,4 @@ var testPattern = Pattern{
         Track {
                 Event{127, 127, gen3},
         },
-}
+	  }
