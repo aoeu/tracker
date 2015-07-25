@@ -9,9 +9,16 @@ type MockGenerator struct{}
 
 func (m MockGenerator) Play(e Event)   {}
 func (m MockGenerator) String() string { return "Mock generator." }
-
 func (e Event) String() string {
 	return fmt.Sprintf("%v %v", e.NoteNum, e.Velocity)
+}
+
+func NewTrack(g Generator, velocity int, notes ...int) Track {
+	t := make(Track, len(notes))
+	for i := 0; i < len(t); i++ {
+		t[i] = Event{Generator: g, NoteNum: notes[i], Velocity: velocity}
+	}
+	return t
 }
 
 func (p Pattern) maxTrackLen() int {

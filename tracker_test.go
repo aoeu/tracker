@@ -48,3 +48,21 @@ func TestNothing(t *testing.T) {
 	// TODO(aoeu): Remove after actually implementing tests.
 	fmt.Println(testPattern)
 }
+
+func TestNewTrack(t *testing.T) {
+	g := MockGenerator{}
+	v := 127
+	notes := []int{3, 32, 64, 68, 91}
+	tr := NewTrack(g, v, notes...)
+	for i, e := range tr {
+		if e.NoteNum != notes[i] {
+			t.Error("Expected note %v but actual was %v", notes[i], e.NoteNum)
+		}
+		if e.Velocity != v {
+			t.Error("Expected velocity %v but actual was %v", v, e.Velocity)
+		}
+		if e.Generator != g {
+			t.Error("Expceted Generator %v but actual was %v", g, e.Generator)
+		}
+	}
+}
