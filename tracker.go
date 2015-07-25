@@ -1,5 +1,15 @@
 package tracker
 
+import (
+	"fmt"
+)
+
+// A mockGenerator is only intended for testing or debugging.
+type mockGenerator struct{}
+
+func (m mockGenerator) Play(e Event)   {}
+func (m mockGenerator) String() string { return "Mock generator." }
+
 func (e Event) String() string {
 	return fmt.Sprintf("%v %v", e.NoteNum, e.Velocity)
 }
