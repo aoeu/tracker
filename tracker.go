@@ -1,7 +1,11 @@
 package tracker
 
 import (
+	"encoding/gob"
+"io"
+"bytes"
 	"fmt"
+	"io/ioutil"
 	"time"
 )
 
@@ -20,6 +24,23 @@ func NewTrack(g Generator, velocity int, notes ...int) Track {
 		t[i] = Event{Generator: g, NoteNum: notes[i], Velocity: velocity}
 	}
 	return t
+}
+
+func NewPattern(filePath string) (*Pattern, error) {
+	b, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return &Pattern{}, err
+	}
+	// TODO(aoeu): Is there a programmatic way of registering the types?
+	gob.Register(Pattern{})
+	gob.Register(MockGenerator{})
+	dec := gob.NewDecoder(bytes.NewReader(b))
+	pat := Pattern{}
+	err = dec.Decode(&pat)
+	if err != nil && err != io.EOF {
+		return &Pattern{}, err
+	}
+	return &pat, nil
 }
 
 func (p Pattern) maxTrackLen() int {
