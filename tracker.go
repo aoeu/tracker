@@ -2,6 +2,7 @@ package tracker
 
 import (
 	"fmt"
+	"time"
 )
 
 // A mockGenerator is only intended for testing or debugging.
@@ -76,4 +77,17 @@ func (p Pattern) GetLines() []Line {
 		l[i] = p.GetLine(i)
 	}
 	return l
+}
+
+func (t Tracker) Play() {
+	nsPerBeat := 60000000000 / t.BPM
+	for _, pattern := range t.PatternTable {
+		for _, line := range pattern.GetLines() {
+			for _, e := range line {
+				go e.Generator.Play(e) // TODO(aoeu): Reconsider ownership of Events and Generators.
+			}
+			<-time.After(time.Duration(nsPerBeat) * time.Nanosecond)
+			t.screen.redraw <- true
+		}
+	}
 }
