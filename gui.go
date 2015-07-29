@@ -87,11 +87,16 @@ func (s *screen) moveC(d dir) {
 	}
 }
 
+const (
+	editMode = "EDIT MODE"
+	playbackMode = "Press 'e' to edit."
+)
+
 func (s *screen) printEditMode() {
 	if s.editMode {
-		s.prints(1, 1, "EDIT MODE")
+		s.prints(1, 1, editMode)
 	} else {
-		s.prints(1, 1, "         ")
+		s.prints(1, 1, playbackMode)
 	}
 }
 
