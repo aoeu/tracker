@@ -11,13 +11,23 @@ const(UP dir = iota
 		LEFT
 		RIGHT)
 
-func New() {
+func New() error {
 	c := make(chan bool)
 	termboxInit()
 	defer termbox.Close()
-	s := screen{fg: termbox.ColorDefault, bg: termbox.ColorDefault, editMode: false}
+	// TODO(aoeu): Don't hardcode the pattern name, use flags.
+	pattern, err := NewPattern("cmd/testpattern.trkr")
+	if err != nil {
+		return err
+	}
+	s := screen{
+		fg: termbox.ColorDefault, 
+		bg: termbox.ColorDefault, 
+		editMode: false,
+		currentPattern: *pattern}
 	go s.sFunc(c)
 	s.UserIn(c)
+	return nil
 }
 
 func (s *screen) sFunc(c chan bool) {
