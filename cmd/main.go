@@ -1,8 +1,12 @@
 package main
 
 import (
-		"tracker")
+	"log"
+	"tracker"
+)
 
 func main() {
-	tracker.New()
+	if err := tracker.New(); err != nil {
+		log.Fatal(err)
+	}
 }

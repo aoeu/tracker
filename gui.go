@@ -13,7 +13,9 @@ const(UP dir = iota
 
 func New() error {
 	c := make(chan bool)
-	termboxInit()
+	if err := termboxInit(); err != nil {
+		return err
+	}
 	defer termbox.Close()
 	// TODO(aoeu): Don't hardcode the pattern name, use flags.
 	pattern, err := NewPattern("cmd/testpattern.trkr")
@@ -25,6 +27,8 @@ func New() error {
 		bg: termbox.ColorDefault, 
 		editMode: false,
 		currentPattern: *pattern}
+	s.printThings()
+	refresh()
 	go s.sFunc(c)
 	s.UserIn(c)
 	return nil
@@ -107,10 +111,13 @@ func clear() {
 	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 }
 
-func termboxInit() {
-	termbox.Init()
+func termboxInit() error {
+	if err := termbox.Init(); err != nil {
+		return err
+	}
 	termbox.SetInputMode(termbox.InputEsc)
 //	termbox.SetOutputMode(termbox.Output256)
+	return nil
 }
 
 //	Prints text to the screen
