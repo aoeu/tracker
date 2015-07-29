@@ -1,8 +1,8 @@
 package main
 
 import (
-		"tracker/gui")
+		"tracker")
 
 func main() {
-	gui.New()
+	tracker.New()
 }

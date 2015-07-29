@@ -30,4 +30,10 @@ type Pattern []Track
 // of as playing an entire song.
 type PatternTable []Pattern
 
+type Tracker struct {
+	BPM int
+	PatternTable
+	screen
+}
+
 // TODO(aoeu): A PatternTable isn't really a "table."  Rename it?

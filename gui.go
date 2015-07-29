@@ -1,8 +1,8 @@
-package gui
+package tracker
 
 import ("github.com/nsf/termbox-go"
 			"fmt"
-			. "tracker")
+			)
 
 type dir int
 
@@ -15,12 +15,12 @@ func New() {
 	c := make(chan bool)
 	termboxInit()
 	defer termbox.Close()
-	s := Screen{fg: termbox.ColorDefault, bg: termbox.ColorDefault, editMode: false}
+	s := screen{fg: termbox.ColorDefault, bg: termbox.ColorDefault, editMode: false}
 	go s.sFunc(c)
 	s.UserIn(c)
 }
 
-func (s *Screen) sFunc(c chan bool) {
+func (s *screen) sFunc(c chan bool) {
 	for {
 		<-c
 		clear()
@@ -28,25 +28,25 @@ func (s *Screen) sFunc(c chan bool) {
 		refresh()
 	}
 }
-func (s *Screen) printThings() {
+func (s *screen) printThings() {
 	s.printEditMode()
 	s.drawTable()
 	//	s.drawCursor()
 }
 
-func (s *Screen) drawTable() {
+func (s *screen) drawTable() {
 	// TODO: THIS IS WRONG
-	l := testPattern.GetLines()
+	l := s.currentPattern.GetLines()
 	if s.editMode {
-		s.drawPattern(5, 5, s.cY, s.cX, testPattern)
+		s.drawPattern(5, 5, s.cY, s.cX, s.currentPattern)
 	} else {
 		for i := range l {
-			s.drawPattern(5, 5, s.cY, i, testPattern)
+			s.drawPattern(5, 5, s.cY, i, s.currentPattern)
 		}
 	}
 }
 /*
-func (s *Screen) drawCursor() {
+func (s *screen) drawCursor() {
 	if s.editMode {
 		s.bg = termbox.ColorBlue
 		s.drawChar(s.cX, s.cY, ' ')
@@ -54,7 +54,7 @@ func (s *Screen) drawCursor() {
 	}
 }
 */
-func (s *Screen) moveC(d dir) {
+func (s *screen) moveC(d dir) {
 	if s.editMode {
 		switch d {
 		case UP:
@@ -73,7 +73,7 @@ func (s *Screen) moveC(d dir) {
 	}
 }
 
-func (s *Screen) printEditMode() {
+func (s *screen) printEditMode() {
 	if s.editMode {
 		s.prints(1, 1, "EDIT MODE")
 	} else {
@@ -81,11 +81,12 @@ func (s *Screen) printEditMode() {
 	}
 }
 
-type Screen struct {
+type screen struct {
 	fg, bg		termbox.Attribute
 	editMode		bool
 	cX, cY		int
-	Redraw chan bool
+	redraw chan bool
+	currentPattern Pattern // TODO(aoeu): Do we need this?
 }
 
 func refresh() {
@@ -102,8 +103,8 @@ func termboxInit() {
 //	termbox.SetOutputMode(termbox.Output256)
 }
 
-//	Prints text to the Screen
-func (s Screen) prints(x, y int, n interface{}) {
+//	Prints text to the screen
+func (s screen) prints(x, y int, n interface{}) {
 	switch n.(type){
 	case int:
 		s.drawString(x, y, fmt.Sprintf("%3d", n))
@@ -112,7 +113,7 @@ func (s Screen) prints(x, y int, n interface{}) {
 	}
 }
 
-func (s *Screen) UserIn(c chan bool) {
+func (s *screen) UserIn(c chan bool) {
 	for {
 		switch e := termbox.PollEvent(); e.Type {
 		case termbox.EventKey:
@@ -141,21 +142,21 @@ func (s *Screen) UserIn(c chan bool) {
 	}
 }
 
-func (s Screen) drawString(x, y int, str string) {
+func (s screen) drawString(x, y int, str string) {
 	for i, r := range str {
 		s.drawChar(x + i, y, r)
 	}
 }
 
-func (s Screen) drawChar(x, y int, r rune) {
+func (s screen) drawChar(x, y int, r rune) {
 	termbox.SetCell(x, y, r, s.fg, s.bg)
 }
 /*
-func (s *Screen) drawPlayingPattern(x, y int, i int, p Pattern) {
+func (s *screen) drawPlayingPattern(x, y int, i int, p Pattern) {
 	s.drawPattern(x, y, i, p)
 }
 */
-func (s *Screen) drawPattern(x, y, hr, hc int, p Pattern) {
+func (s *screen) drawPattern(x, y, hr, hc int, p Pattern) {
 	l := p.GetLines()
 	for i, v := range l {
 		s.fg = termbox.ColorBlue
@@ -188,24 +189,3 @@ func (s *Screen) drawPattern(x, y, hr, hc int, p Pattern) {
 //	Struct variable indicating "theme:
 //	Functions use current "Theme" when printing/drawing
 
-var gen1 = MockGenerator{}
-var gen2 = MockGenerator{}
-var gen3 = MockGenerator{}
-
-var testPattern = Pattern{
-        Track{
-                Event{1, 1, gen1},
-                Event{2, 1, gen1},
-                Event{3, 1, gen1},
-                Event{4, 1,  gen1},
-                Event{5, 1, gen1},
-        },
-        Track {
-                Event{64, 127, gen2},
-                Event{60, 127, gen2},
-               Event{67, 127, gen2},
-        },
-        Track {
-                Event{127, 127, gen3},
-        },
-	  }

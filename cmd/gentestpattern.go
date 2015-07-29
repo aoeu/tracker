@@ -1,0 +1,59 @@
+package main
+
+import (
+"fmt"
+	"encoding/gob"
+	"flag"
+	"log"
+	"os"
+	"tracker"
+)
+
+func makeTestPattern() tracker.Pattern {
+	var gen1 = tracker.MockGenerator{}
+	var gen2 = tracker.MockGenerator{}
+	var gen3 = tracker.MockGenerator{}
+
+	return tracker.Pattern{
+		tracker.Track{
+			tracker.Event{1, 1, gen1},
+			tracker.Event{2, 1, gen1},
+			tracker.Event{3, 1, gen1},
+			tracker.Event{4, 1, gen1},
+			tracker.Event{5, 1, gen1},
+		},
+		tracker.Track{
+			tracker.Event{64, 127, gen2},
+			tracker.Event{60, 127, gen2},
+			tracker.Event{67, 127, gen2},
+		},
+		tracker.Track{
+			tracker.Event{127, 127, gen3},
+		},
+	}
+}
+
+func main() {
+	var filePath string
+	flag.StringVar(&filePath, "out", "testpattern.trkr", "The file to write the encoded test pattern to.")
+	flag.Parse()
+
+	// Use OpenFile so we can clobber existing files by setting the relevant syscall flag.
+	out, err := os.OpenFile(filePath, os.O_WRONLY, 0600)
+	if err != nil {
+		fmt.Println("here")
+		log.Fatal(err)
+	}
+	defer out.Close()
+	gob.Register(tracker.Pattern{})
+	gob.Register(tracker.MockGenerator{})
+
+	enc := gob.NewEncoder(out)
+	pat := makeTestPattern()
+	err = enc.Encode(pat)
+	if err != nil {
+		fmt.Println("there")
+		log.Fatal(err)
+	}
+
+}
