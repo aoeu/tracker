@@ -24,13 +24,23 @@ func New() (*Tracker, error) {
 		fg: termbox.ColorDefault, 
 		bg: termbox.ColorDefault, 
 		editMode: false,
+		redraw: make(chan bool),
 		currentPattern: p.PatternTable[0],
+		lineOffset: -1,
 	}
 	s.printThings()
 	t := &Tracker{screen: s, Player: p, stop: make(chan bool)}
 	return t, nil 
 }
 
+type screen struct {
+	fg, bg		termbox.Attribute
+	editMode		bool
+	cX, cY		int
+	redraw chan bool
+	currentPattern *Pattern // TODO(aoeu): Do we need this?
+	lineOffset int
+}
 
 func (t *Tracker) Run() {
 	t.screen.refresh()
@@ -48,14 +58,11 @@ func (s *screen) printThings() {
 }
 
 func (s *screen) drawTable() {
-	// TODO: THIS IS WRONG
-	l := s.currentPattern.GetLines()
-	if s.editMode {
+	switch {
+	case s.editMode:
 		s.drawPattern(5, 5, s.cY, s.cX, *s.currentPattern)
-	} else {
-		for i := range l {
-			s.drawPattern(5, 5, s.cY, i, *s.currentPattern)
-		}
+	default:
+		s.drawPattern(5, 5, s.cY, -1, *s.currentPattern)
 	}
 }
 /*
@@ -68,6 +75,7 @@ func (s *screen) drawCursor() {
 }
 */
 func (s *screen) moveC(d dir) {
+	maxX, maxY :=  len(*s.currentPattern)-1, s.currentPattern.maxTrackLen()-1
 	if s.editMode {
 		switch d {
 		case UP:
@@ -75,9 +83,13 @@ func (s *screen) moveC(d dir) {
 				s.cY--
 			}
 		case DOWN:
-			s.cY++
+			if s.cY < maxY {
+				s.cY++
+			}
 		case RIGHT:
-			s.cX++
+			if s.cX < maxX {
+				s.cX++
+			}
 		case LEFT:
 			if s.cX > 0 {
 			s.cX--
@@ -97,14 +109,6 @@ func (s *screen) printEditMode() {
 	} else {
 		s.prints(1, 1, playbackMode)
 	}
-}
-
-type screen struct {
-	fg, bg		termbox.Attribute
-	editMode		bool
-	cX, cY		int
-	redraw chan bool
-	currentPattern *Pattern // TODO(aoeu): Do we need this?
 }
 
 func termboxInit() error {
@@ -134,8 +138,18 @@ func (s *screen) refresh() {
 
 func (t *Tracker) UserIn() {
 	for {
-		switch e := termbox.PollEvent(); e.Type {
-		case termbox.EventKey:
+		keyEvents := make(chan termbox.Event)
+		go func() {
+			for {	
+				e := termbox.PollEvent()
+				switch e.Type {
+				case termbox.EventKey:
+					keyEvents <- e
+				}
+			}
+		}()
+		select {
+		case e := <-keyEvents:
 			switch e.Key {
 			case termbox.KeyEsc:
 				return
@@ -150,15 +164,23 @@ func (t *Tracker) UserIn() {
 			}
 			switch e.Ch {
 			case 'e':
+				if t.isPlaying {
+					t.TogglePlayback()
+				}
 				if t.screen.editMode {
 					t.screen.editMode = false
+					t.screen.refresh()
 				} else {
 					t.screen.editMode = true
-					//t.Stop()
+					// TODO(aoeu): t.Stop() ? 
 				}
 			case 'p':
+				t.screen.editMode = false
+				t.screen.refresh()
 				t.TogglePlayback()
 			}
+			t.screen.refresh()
+		case <-t.screen.redraw:
 			t.screen.refresh()
 		}
 	}
@@ -173,19 +195,18 @@ func (s screen) drawString(x, y int, str string) {
 func (s screen) drawChar(x, y int, r rune) {
 	termbox.SetCell(x, y, r, s.fg, s.bg)
 }
-/*
-func (s *screen) drawPlayingPattern(x, y int, i int, p Pattern) {
-	s.drawPattern(x, y, i, p)
-}
-*/
+
 func (s *screen) drawPattern(x, y, hr, hc int, p Pattern) {
-	l := p.GetLines()
-	for i, v := range l {
+	defer func() {
+		s.fg = termbox.ColorBlue
+		s.bg = termbox.ColorDefault
+	}()
+	for i, l := range p.GetLines() {
 		s.fg = termbox.ColorBlue
 		s.bg = termbox.ColorDefault
 		s.prints(x, y + 3 + i, i)
-		for z, e := range v {
-			if i == hr && z == hc {
+		for z, e := range l {
+			if i == hr && z == hc || i == s.lineOffset {
 				s.bg = termbox.ColorRed
 			} else {
 				s.bg = termbox.ColorDefault

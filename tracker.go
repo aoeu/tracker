@@ -115,7 +115,7 @@ func NewPlayer(filepath string) (*Player, error) {
 
 func (t *Tracker) TogglePlayback() {
 	if t.isPlaying {
-		t.stop <- true
+		t.Stop()
 	} else {
 		go t.Play()
 	}
@@ -127,16 +127,23 @@ func (t *Tracker) Stop() {
 
 func (t *Tracker) Play() {
 	t.isPlaying = true
-	defer func() { t.isPlaying = false }()
+	defer func() { 
+		t.isPlaying = false 
+		t.screen.lineOffset= -1
+		t.screen.redraw <- true
+	}()
 	nsPerBeat := 60000000000 / t.Player.BPM
 	for _, pattern := range t.Player.PatternTable {
 		for _, line := range pattern.GetLines() {
+			t.screen.lineOffset += 1
+			t.screen.redraw <- true
 			for _, e := range line {
-				go e.Generator.Play(e) // TODO(aoeu): Reconsider ownership of Events and Generators.
+				if e.Generator != nil {
+					go e.Generator.Play(e) // TODO(aoeu): Reconsider ownership of Events and Generators.
+				}
 			}
 			select {
 			case <-time.After(time.Duration(nsPerBeat) * time.Nanosecond):
-				t.screen.redraw <- true
 			case <-t.stop:
 				return
 			}
