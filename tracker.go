@@ -119,7 +119,6 @@ func (t *Tracker) TogglePlayback() {
 	} else {
 		go t.Play()
 	}
-	t.isPlaying = !t.isPlaying // TODO(aoeu) Mutex isPlaying ?
 }
 
 func (t *Tracker) Stop() {
@@ -127,6 +126,8 @@ func (t *Tracker) Stop() {
 }
 
 func (t *Tracker) Play() {
+	t.isPlaying = true
+	defer func() { t.isPlaying = false }()
 	nsPerBeat := 60000000000 / t.Player.BPM
 	for _, pattern := range t.Player.PatternTable {
 		for _, line := range pattern.GetLines() {
@@ -141,4 +142,5 @@ func (t *Tracker) Play() {
 			}
 		}
 	}
+
 }
