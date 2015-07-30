@@ -6,7 +6,11 @@ import (
 )
 
 func main() {
-	if err := tracker.New(); err != nil {
+	if t, err := tracker.New(); err != nil {
 		log.Fatal(err)
+	} else {
+		t.Run()
+		defer t.Exit()
 	}
+	log.Println("Done.")
 }

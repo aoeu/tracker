@@ -1,10 +1,10 @@
 package tracker
 
 import (
+	"bytes"
 	"encoding/gob"
-"io"
-"bytes"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"time"
 )
@@ -100,15 +100,45 @@ func (p Pattern) GetLines() []Line {
 	return l
 }
 
-func (t Tracker) Play() {
-	nsPerBeat := 60000000000 / t.BPM
-	for _, pattern := range t.PatternTable {
+func NewPlayer(filepath string) (*Player, error) {
+	p := Player{}
+	p.PatternTable = make(PatternTable, 1)
+	if pattern, err := NewPattern(filepath); err != nil {
+		return &Player{}, err
+	} else {
+		p.PatternTable[0] = pattern
+	}
+	p.BPM = 120 // TODO(aoeu): Don't hardcode the BPM.
+	return &p, nil
+
+}
+
+func (t *Tracker) TogglePlayback() {
+	if t.isPlaying {
+		t.stop <- true
+	} else {
+		go t.Play()
+	}
+	t.isPlaying = !t.isPlaying // TODO(aoeu) Mutex isPlaying ?
+}
+
+func (t *Tracker) Stop() {
+	t.stop <- true
+}
+
+func (t *Tracker) Play() {
+	nsPerBeat := 60000000000 / t.Player.BPM
+	for _, pattern := range t.Player.PatternTable {
 		for _, line := range pattern.GetLines() {
 			for _, e := range line {
 				go e.Generator.Play(e) // TODO(aoeu): Reconsider ownership of Events and Generators.
 			}
-			<-time.After(time.Duration(nsPerBeat) * time.Nanosecond)
-			t.screen.redraw <- true
+			select {
+			case <-time.After(time.Duration(nsPerBeat) * time.Nanosecond):
+				t.screen.redraw <- true
+			case <-t.stop:
+				return
+			}
 		}
 	}
 }

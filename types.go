@@ -28,12 +28,18 @@ type Pattern []Track
 // A PatternTable is a set of patterns to play in sequence.
 // Playing back a PatternTable in entiretly may be thought
 // of as playing an entire song.
-type PatternTable []Pattern
+type PatternTable []*Pattern
 
-type Tracker struct {
+type Player struct {
 	BPM int
 	PatternTable
-	screen
+}
+
+type Tracker struct {
+	screen    *screen
+	Player    *Player
+	stop      chan bool
+	isPlaying bool
 }
 
 // TODO(aoeu): A PatternTable isn't really a "table."  Rename it?

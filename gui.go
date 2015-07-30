@@ -11,37 +11,36 @@ const(UP dir = iota
 		LEFT
 		RIGHT)
 
-func New() error {
-	c := make(chan bool)
+func New() (*Tracker, error) {
 	if err := termboxInit(); err != nil {
-		return err
+		return &Tracker{}, err
 	}
-	defer termbox.Close()
 	// TODO(aoeu): Don't hardcode the pattern name, use flags.
-	pattern, err := NewPattern("cmd/testpattern.trkr")
+	p, err := NewPlayer("cmd/testpattern.trkr")
 	if err != nil {
-		return err
+		return &Tracker{}, err
 	}
-	s := screen{
+	s := &screen{
 		fg: termbox.ColorDefault, 
 		bg: termbox.ColorDefault, 
 		editMode: false,
-		currentPattern: *pattern}
+		currentPattern: p.PatternTable[0],
+	}
 	s.printThings()
-	refresh()
-	go s.sFunc(c)
-	s.UserIn(c)
-	return nil
+	t := &Tracker{screen: s, Player: p, stop: make(chan bool)}
+	return t, nil 
 }
 
-func (s *screen) sFunc(c chan bool) {
-	for {
-		<-c
-		clear()
-		s.printThings()
-		refresh()
-	}
+
+func (t *Tracker) Run() {
+	t.screen.refresh()
+	t.UserIn()
 }
+
+func (t *Tracker) Exit() {
+	termbox.Close()
+}
+
 func (s *screen) printThings() {
 	s.printEditMode()
 	s.drawTable()
@@ -52,10 +51,10 @@ func (s *screen) drawTable() {
 	// TODO: THIS IS WRONG
 	l := s.currentPattern.GetLines()
 	if s.editMode {
-		s.drawPattern(5, 5, s.cY, s.cX, s.currentPattern)
+		s.drawPattern(5, 5, s.cY, s.cX, *s.currentPattern)
 	} else {
 		for i := range l {
-			s.drawPattern(5, 5, s.cY, i, s.currentPattern)
+			s.drawPattern(5, 5, s.cY, i, *s.currentPattern)
 		}
 	}
 }
@@ -105,15 +104,7 @@ type screen struct {
 	editMode		bool
 	cX, cY		int
 	redraw chan bool
-	currentPattern Pattern // TODO(aoeu): Do we need this?
-}
-
-func refresh() {
-	termbox.Flush()
-}
-
-func clear() {
-	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
+	currentPattern *Pattern // TODO(aoeu): Do we need this?
 }
 
 func termboxInit() error {
@@ -135,31 +126,40 @@ func (s screen) prints(x, y int, n interface{}) {
 	}
 }
 
-func (s *screen) UserIn(c chan bool) {
+func (s *screen) refresh() {
+	termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
+	s.printThings()
+	termbox.Flush()
+}
+
+func (t *Tracker) UserIn() {
 	for {
 		switch e := termbox.PollEvent(); e.Type {
 		case termbox.EventKey:
-			c <- true
 			switch e.Key {
 			case termbox.KeyEsc:
 				return
 			case termbox.KeyArrowUp:
-				s.moveC(UP)
+				t.screen.moveC(UP)
 			case termbox.KeyArrowDown:
-				s.moveC(DOWN)
+				t.screen.moveC(DOWN)
 			case termbox.KeyArrowRight:
-				s.moveC(RIGHT)
+				t.screen.moveC(RIGHT)
 			case termbox.KeyArrowLeft:
-				s.moveC(LEFT)
+				t.screen.moveC(LEFT)
 			}
 			switch e.Ch {
 			case 'e':
-				if s.editMode {
-					s.editMode = false
+				if t.screen.editMode {
+					t.screen.editMode = false
 				} else {
-					s.editMode = true
+					t.screen.editMode = true
+					//t.Stop()
 				}
+			case 'p':
+				t.TogglePlayback()
 			}
+			t.screen.refresh()
 		}
 	}
 }
