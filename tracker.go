@@ -127,11 +127,12 @@ func (t *Tracker) Stop() {
 
 func (t *Tracker) Play() {
 	t.isPlaying = true
-	defer func() { 
-		t.isPlaying = false 
-		t.screen.lineOffset= -1
+	defer func() {
+		t.isPlaying = false
+		t.screen.lineOffset = -1
 		t.screen.redraw <- true
 	}()
+	// TODO(aoeu): Can pieces of this be decoupled from Tracker?
 	nsPerBeat := 60000000000 / t.Player.BPM
 	for _, pattern := range t.Player.PatternTable {
 		for _, line := range pattern.GetLines() {
@@ -150,4 +151,17 @@ func (t *Tracker) Play() {
 		}
 	}
 
+}
+
+func NewTracker(trkrFilepath string) (*Tracker, error) {
+	t := Tracker{}
+	if p, err := NewPlayer(trkrFilepath); err != nil {
+		return &Tracker{}, err
+	} else {
+		t.Player = p
+	}
+	t.screen = NewScreen()
+	t.screen.currentPattern = t.Player.PatternTable[0]
+	t.stop = make(chan bool)
+	return &t, nil
 }

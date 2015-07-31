@@ -16,22 +16,14 @@ func New() (*Tracker, error) {
 		return &Tracker{}, err
 	}
 	// TODO(aoeu): Don't hardcode the pattern name, use flags.
-	p, err := NewPlayer("cmd/testpattern.trkr")
+	t, err := NewTracker("cmd/testpattern.trkr")
 	if err != nil {
 		return &Tracker{}, err
 	}
-	s := &screen{
-		fg: termbox.ColorDefault, 
-		bg: termbox.ColorDefault, 
-		editMode: false,
-		redraw: make(chan bool),
-		currentPattern: p.PatternTable[0],
-		lineOffset: -1,
-	}
-	s.printThings()
-	t := &Tracker{screen: s, Player: p, stop: make(chan bool)}
+	t.screen.printThings()
 	return t, nil 
 }
+
 
 type screen struct {
 	fg, bg		termbox.Attribute
@@ -40,6 +32,16 @@ type screen struct {
 	redraw chan bool
 	currentPattern *Pattern // TODO(aoeu): Do we need this?
 	lineOffset int
+}
+
+func NewScreen() *screen {
+	return  &screen{
+		fg: termbox.ColorDefault, 
+		bg: termbox.ColorDefault, 
+		editMode: false,
+		redraw: make(chan bool),
+		lineOffset: -1,
+	}
 }
 
 func (t *Tracker) Run() {
