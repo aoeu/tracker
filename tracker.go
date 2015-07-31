@@ -1,6 +1,7 @@
 package tracker
 
 import (
+	"audio"
 	"bytes"
 	"encoding/gob"
 	"fmt"
@@ -14,16 +15,39 @@ type MockGenerator struct{}
 
 func (m MockGenerator) Play(e Event)   {}
 func (m MockGenerator) String() string { return "Mock generator." }
+
 func (e Event) String() string {
 	return fmt.Sprintf("%v %v", e.NoteNum, e.Velocity)
 }
 
-func NewTrack(g Generator, velocity int, notes ...int) Track {
+type AudioGenerator struct {
+	Sampler *audio.Sampler
+}
+
+func NewAudioGenerator(filepath string) (*AudioGenerator, error) {
+	a := AudioGenerator{}
+	if s, err := audio.NewLoadedSampler(filepath); err != nil {
+		return &AudioGenerator{}, err
+	} else {
+		a.Sampler = s
+	}
+	return &a, nil
+}
+
+func (a AudioGenerator) Play(e Event) {
+	go a.Sampler.Play(e.NoteNum, float32(e.Velocity)/127.0)
+}
+
+func (a AudioGenerator) String() string {
+	return "Audio generator." // TODO(aoeu): Return something useful.
+}
+
+func NewTrack(g Generator, velocity int, notes ...int) *Track {
 	t := make(Track, len(notes))
 	for i := 0; i < len(t); i++ {
-		t[i] = Event{Generator: g, NoteNum: notes[i], Velocity: velocity}
+		t[i] = &Event{Generator: g, NoteNum: notes[i], Velocity: velocity}
 	}
-	return t
+	return &t
 }
 
 func NewPattern(filePath string) (*Pattern, error) {
@@ -78,7 +102,7 @@ func (p Pattern) GetLine(offset int) Line {
 		case len(track) > offset:
 			l[i] = track[offset]
 		default:
-			l[i] = Event{}
+			l[i] = &Event{}
 		}
 	}
 	return l
@@ -140,7 +164,8 @@ func (t *Tracker) Play() {
 			t.screen.redraw <- true
 			for _, e := range line {
 				if e.Generator != nil {
-					go e.Generator.Play(e) // TODO(aoeu): Reconsider ownership of Events and Generators.
+					// TODO(aoeu): Reconsider ownership of Events and Generators.
+					go e.Generator.Play(*e)
 				}
 			}
 			select {
@@ -151,6 +176,32 @@ func (t *Tracker) Play() {
 		}
 	}
 
+}
+
+func (t *Tracker) ApplySampler(samplerConfig string) error {
+	g, err := NewAudioGenerator(samplerConfig)
+	if err != nil {
+		return err
+	}
+	if err := g.Sampler.Run(); err != nil {
+		return err
+	}
+	for _, pattern := range t.Player.PatternTable {
+		pattern.ApplyGenerator(g)
+	}
+	return nil
+}
+
+func (p *Pattern) ApplyGenerator(g Generator) {
+	for _, track := range *p {
+		track.ApplyGenerator(g)
+	}
+}
+
+func (t *Track) ApplyGenerator(g Generator) {
+	for _, e := range *t {
+		e.Generator = g
+	}
 }
 
 func NewTracker(trkrFilepath string) (*Tracker, error) {

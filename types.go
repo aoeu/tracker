@@ -15,11 +15,11 @@ type Generator interface {
 
 // A Track is a series of Events meant to be played sequentially
 // through time on one or more Generators.
-type Track []Event
+type Track []*Event
 
 // A Line is a set of Events meant to be played concurrently
 // at a single moment in time on one or more Generators.
-type Line []Event
+type Line []*Event
 
 // A Pattern is a set of Tracks meant to be played
 // concurrently through time.
