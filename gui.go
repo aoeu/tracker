@@ -32,7 +32,7 @@ type screen struct {
 	editMode		bool
 	cX, cY		int
 	redraw chan bool
-	currentPattern *Pattern // TODO(aoeu): Do we need this?
+	currentPattern *Pattern // TODO(aoeu): Do we need the full PatternTable?
 	lineOffset int
 }
 
@@ -58,7 +58,6 @@ func (t *Tracker) Exit() {
 func (s *screen) printThings() {
 	s.printEditMode()
 	s.drawTable()
-	//	s.drawCursor()
 }
 
 func (s *screen) drawTable() {
@@ -69,16 +68,6 @@ func (s *screen) drawTable() {
 		s.drawPattern(5, 5, s.cY, -1, *s.currentPattern)
 	}
 }
-
-/*
-func (s *screen) drawCursor() {
-	if s.editMode {
-		s.bg = termbox.ColorBlue
-		s.drawChar(s.cX, s.cY, ' ')
-		s.bg = termbox.ColorDefault
-	}
-}
-*/
 
 func (s *screen) moveC(d dir) {
 	maxX, maxY :=  len(*s.currentPattern)-1, s.currentPattern.maxTrackLen()-1
@@ -122,7 +111,6 @@ func termboxInit() error {
 		return err
 	}
 	termbox.SetInputMode(termbox.InputEsc)
-//	termbox.SetOutputMode(termbox.Output256)
 	return nil
 }
 
@@ -160,10 +148,6 @@ func (s *screen) editCell() {
 
 	e := &Event{NoteNum: params[0], Velocity: params[1]}
 	(*s.currentPattern).InsertAt(s.cX, s.cY, e)
-	/*e := (*s.currentPattern)[s.cY][s.cY]
-	e = &Event{}
-	e.NoteNum, e.Velocity = params[0], params[1]
-	(*s.currentPattern).InsertAt(s.cX, s.cY, e)*/
 }
 
 func (t *Tracker) UserIn() {
@@ -322,11 +306,7 @@ func (s screen) getInput() (rune) {
 			return ' '
 		case termbox.KeyEnter:
 			return '\n'
-		case termbox.KeyBackspace2:// TODO(Brad) - no Fallthroughs
-			fallthrough
-		case termbox.KeyBackspace:
-			fallthrough
-		case termbox.KeyDelete:
+		case termbox.KeyDelete, termbox.KeyBackspace, termbox.KeyBackspace2:
 			return -2
 		}
 		return e.Ch
