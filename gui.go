@@ -2,6 +2,8 @@ package tracker
 
 import ("github.com/nsf/termbox-go"
 			"fmt"
+			"strings"
+			"strconv"
 			)
 
 type dir int
@@ -10,6 +12,7 @@ const(UP dir = iota
 		DOWN
 		LEFT
 		RIGHT)
+
 
 func New() (*Tracker, error) {
 	if err := termboxInit(); err != nil {
@@ -21,9 +24,8 @@ func New() (*Tracker, error) {
 		return &Tracker{}, err
 	}
 	t.screen.printThings()
-	return t, nil 
+	return t, nil
 }
-
 
 type screen struct {
 	fg, bg		termbox.Attribute
@@ -36,8 +38,8 @@ type screen struct {
 
 func NewScreen() *screen {
 	return  &screen{
-		fg: termbox.ColorDefault, 
-		bg: termbox.ColorDefault, 
+		fg: termbox.ColorDefault,
+		bg: termbox.ColorDefault,
 		editMode: false,
 		redraw: make(chan bool),
 		lineOffset: -1,
@@ -67,6 +69,7 @@ func (s *screen) drawTable() {
 		s.drawPattern(5, 5, s.cY, -1, *s.currentPattern)
 	}
 }
+
 /*
 func (s *screen) drawCursor() {
 	if s.editMode {
@@ -76,6 +79,7 @@ func (s *screen) drawCursor() {
 	}
 }
 */
+
 func (s *screen) moveC(d dir) {
 	maxX, maxY :=  len(*s.currentPattern)-1, s.currentPattern.maxTrackLen()-1
 	if s.editMode {
@@ -138,11 +142,31 @@ func (s *screen) refresh() {
 	termbox.Flush()
 }
 
+func (s *screen) editCell() {
+	input := s.NewEditBox(20, 20, "NoteNumber Velocity")
+	sliced := strings.Split(input, " ")
+	var params [2]int
+	for i, val := range sliced {
+		n, err := strconv.Atoi(val)
+		if err != nil {
+			panic(err)
+		}
+		params[i] = n
+	}
+
+	e := &Event{NoteNum: params[0], Velocity: params[1]}
+	(*s.currentPattern).InsertAt(s.cX, s.cY, e)
+	/*e := (*s.currentPattern)[s.cY][s.cY]
+	e = &Event{}
+	e.NoteNum, e.Velocity = params[0], params[1]
+	(*s.currentPattern).InsertAt(s.cX, s.cY, e)*/
+}
+
 func (t *Tracker) UserIn() {
-	for {
 		keyEvents := make(chan termbox.Event)
+
 		go func() {
-			for {	
+			for {
 				e := termbox.PollEvent()
 				switch e.Type {
 				case termbox.EventKey:
@@ -150,6 +174,8 @@ func (t *Tracker) UserIn() {
 				}
 			}
 		}()
+
+for {
 		select {
 		case e := <-keyEvents:
 			switch e.Key {
@@ -163,6 +189,8 @@ func (t *Tracker) UserIn() {
 				t.screen.moveC(RIGHT)
 			case termbox.KeyArrowLeft:
 				t.screen.moveC(LEFT)
+			case termbox.KeyEnter:
+				t.screen.editCell()
 			}
 			switch e.Ch {
 			case 'e':
@@ -199,7 +227,7 @@ func (s screen) drawChar(x, y int, r rune) {
 }
 
 func (s *screen) drawPattern(x, y, hr, hc int, p Pattern) {
-	defer func() {
+	defer func() {		//TODO(Brad) - Don't make this a deferred func
 		s.fg = termbox.ColorBlue
 		s.bg = termbox.ColorDefault
 	}()
@@ -223,7 +251,6 @@ func (s *screen) drawPattern(x, y, hr, hc int, p Pattern) {
 	//	Note, generator, effect, parameter
 }
 
-
 //	Windows
 //	-Draw to windows
 //	-Dynamically adds coordinate offsets based on window position
@@ -234,3 +261,45 @@ func (s *screen) drawPattern(x, y, hr, hc int, p Pattern) {
 //	Struct variable indicating "theme:
 //	Functions use current "Theme" when printing/drawing
 
+func (s screen) NewEditBox(x, y int, title string) (out string) {
+	s.drawEditBox(x, y, title)
+	termbox.Flush()
+	for inChar := s.getInput(); inChar != '\n'; inChar = s.getInput() {
+		out += string(inChar)
+		s.printToEditBox(x, y, out)
+		termbox.Flush()
+	}
+	return
+}
+
+func (s screen) printToEditBox(x, y int, in string) {
+	s.drawString(x + 2, y + 3, in)
+}
+
+func (s screen) drawEditBox(x, y int, title string) {
+	s.drawString(x + 3, y + 1, title)
+	for col := x; col < x + 20; col++ {
+		s.drawChar(col, y, '-')
+		s.drawChar(col, y + 4, '-')
+	}
+	for row := y; row < y + 5; row++ {
+		s.drawChar(x, row, '|')
+		s.drawChar(x + 19, row, '|')
+	}
+}
+
+func (s screen) getInput() (rune) {
+	switch e := termbox.PollEvent(); e.Type {
+	case termbox.EventKey:
+		switch e.Key {
+		case termbox.KeyEsc:
+			return rune(-1)
+		case termbox.KeySpace:
+			return ' '
+		case termbox.KeyEnter:
+			return '\n'
+		}
+		return e.Ch
+	}
+	return 0
+}

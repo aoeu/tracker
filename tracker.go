@@ -216,3 +216,27 @@ func NewTracker(trkrFilepath string) (*Tracker, error) {
 	t.stop = make(chan bool)
 	return &t, nil
 }
+
+func (p *Pattern) InsertAt(x, y int, e *Event) {
+	if len(*p) < x {
+		return	//TODO - Return error ???????
+	}
+
+	t := (*p)[x]
+	l := len((*p)[x])
+	switch {
+	case l > y:
+		t[y].NoteNum, t[y].Velocity = e.NoteNum, e.Velocity
+	case l == y:
+		(*p)[x] = append(t, e)
+		fmt.Println("yea")
+	default:
+		k := make([]*Event, y - l)
+		for i := range k {
+			k[i] = &Event{}
+		}
+		(*p)[x] = append((*p)[x], k...)
+		(*p)[x] = append((*p)[x], e)
+	}
+
+}
