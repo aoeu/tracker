@@ -143,6 +143,9 @@ func (s *screen) refresh() {
 }
 
 func (s *screen) editCell() {
+	if !s.editMode {
+		return
+	}
 	input := s.NewEditBox(20, 20, "NoteNumber Velocity")
 	sliced := strings.Split(input, " ")
 	var params [2]int
@@ -261,11 +264,23 @@ func (s *screen) drawPattern(x, y, hr, hc int, p Pattern) {
 //	Struct variable indicating "theme:
 //	Functions use current "Theme" when printing/drawing
 
+//TODO(Brad) - Add a parameter for entering in current data.
+//	This way when the escape key is pressed, no values have been changed.....
 func (s screen) NewEditBox(x, y int, title string) (out string) {
 	s.drawEditBox(x, y, title)
 	termbox.Flush()
 	for inChar := s.getInput(); inChar != '\n'; inChar = s.getInput() {
-		out += string(inChar)
+		switch inChar {
+		case -1:
+			return ""
+		case -2:
+			if len(out) > 0 {
+				out = out[:len(out)-1]
+			}
+		default:
+			out += string(inChar)
+		}
+		//TODO - Add clearing to whitespace characters deleted
 		s.printToEditBox(x, y, out)
 		termbox.Flush()
 	}
@@ -274,17 +289,18 @@ func (s screen) NewEditBox(x, y int, title string) (out string) {
 
 func (s screen) printToEditBox(x, y int, in string) {
 	s.drawString(x + 2, y + 3, in)
+	s.drawString(x + 2 + len(in), y + 3, " ")
 }
 
 func (s screen) drawEditBox(x, y int, title string) {
 	s.drawString(x + 3, y + 1, title)
-	for col := x; col < x + 20; col++ {
+	for col := x; col < x + 10 + len(title); col++ {
 		s.drawChar(col, y, '-')
 		s.drawChar(col, y + 4, '-')
 	}
 	for row := y; row < y + 5; row++ {
 		s.drawChar(x, row, '|')
-		s.drawChar(x + 19, row, '|')
+		s.drawChar(x + 9 + len(title), row, '|')
 	}
 }
 
@@ -298,6 +314,12 @@ func (s screen) getInput() (rune) {
 			return ' '
 		case termbox.KeyEnter:
 			return '\n'
+		case termbox.KeyBackspace2:// TODO(Brad) - no Fallthroughs
+			fallthrough
+		case termbox.KeyBackspace:
+			fallthrough
+		case termbox.KeyDelete:
+			return -2
 		}
 		return e.Ch
 	}
