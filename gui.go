@@ -1,10 +1,12 @@
 package tracker
 
 import (
+	"regexp"
 	"fmt"
 	"github.com/nsf/termbox-go"
 	"strconv"
 	"strings"
+	"errors"
 )
 
 type dir int
@@ -133,23 +135,32 @@ func (s *screen) refresh() {
 	termbox.Flush()
 }
 
-func (s *screen) editCell() {
+
+var spacesRe = regexp.MustCompile(`\s+`)
+
+func (s *screen) editCell() error {
 	if !s.editMode {
-		return
+		return nil
 	}
 	input := s.NewEditBox(20, 20, "NoteNumber Velocity")
-	sliced := strings.Split(input, " ")
 	var params [2]int
-	for i, val := range sliced {
-		n, err := strconv.Atoi(val)
-		if err != nil {
-			panic(err)
-		}
-		params[i] = n
+	input = spacesRe.ReplaceAllString(input, " ")
+	vals := strings.Split(input, " ")
+	if len(vals) < 2 {
+		return errors.New(fmt.Sprintf("Invalid input when editing cell: '%v'", input))	
 	}
-
+	i := 0
+	for _, val := range vals {
+		if n, err := strconv.Atoi(string(val)); err != nil {
+			return errors.New(fmt.Sprintf("Could not set use value '%v' from input '%v' to edit cell.", val, input))
+		} else {
+			params[i] = n
+			i++
+		}
+	}
 	e := &Event{NoteNum: params[0], Velocity: params[1]}
 	(*s.currentPattern).InsertAt(s.cX, s.cY, e)
+	return nil
 }
 
 func (t *Tracker) UserIn() {
@@ -167,6 +178,8 @@ func (t *Tracker) UserIn() {
 
 	for {
 		select {
+		case <-t.screen.redraw:
+			t.screen.refresh()
 		case e := <-keyEvents:
 			switch e.Key {
 			case termbox.KeyEsc:
@@ -180,7 +193,7 @@ func (t *Tracker) UserIn() {
 			case termbox.KeyArrowLeft:
 				t.screen.moveC(LEFT)
 			case termbox.KeyEnter:
-				t.screen.editCell()
+				t.screen.editCell() //TODO(aoeu): Log any error returned from func editCell.
 			}
 			switch e.Ch {
 			case 'e':
@@ -199,8 +212,6 @@ func (t *Tracker) UserIn() {
 				t.screen.refresh()
 				t.TogglePlayback()
 			}
-			t.screen.refresh()
-		case <-t.screen.redraw:
 			t.screen.refresh()
 		}
 	}
