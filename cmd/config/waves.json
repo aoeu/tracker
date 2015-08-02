@@ -1,466 +1,690 @@
 [
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/MC/MC25.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0005.wav",
         "NoteNum": 0
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/MC/MC10.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0005.wav",
         "NoteNum": 1
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/MC/MC75.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0038.wav",
         "NoteNum": 2
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/MC/MC00.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0015.wav",
         "NoteNum": 3
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/MC/MC50.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0028.wav",
         "NoteNum": 4
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/LT/LT10.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0009.wav",
         "NoteNum": 5
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/LT/LT25.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0041.wav",
         "NoteNum": 6
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/LT/LT75.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0011.wav",
         "NoteNum": 7
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/LT/LT50.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0012.wav",
         "NoteNum": 8
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/LT/LT00.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0037.wav",
         "NoteNum": 9
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/HC/HC75.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0023.wav",
         "NoteNum": 10
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/HC/HC50.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0001.wav",
         "NoteNum": 11
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/HC/HC25.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0043.wav",
         "NoteNum": 12
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/HC/HC00.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowConga0002.wav",
         "NoteNum": 13
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/HC/HC10.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidConga0006.wav",
         "NoteNum": 14
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY5050.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidTom0002.wav",
         "NoteNum": 15
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY2575.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowTom0001.wav",
         "NoteNum": 16
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY1075.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0024.wav",
         "NoteNum": 17
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY2510.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0030.wav",
         "NoteNum": 18
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY7500.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0040.wav",
         "NoteNum": 19
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY2500.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0011.wav",
         "NoteNum": 20
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY2525.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0016.wav",
         "NoteNum": 21
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY0050.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0007.wav",
         "NoteNum": 22
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY0000.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0034.wav",
         "NoteNum": 23
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY0010.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidConga0002.wav",
         "NoteNum": 24
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY5010.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0039.wav",
         "NoteNum": 25
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY7510.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0004.wav",
         "NoteNum": 26
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY2550.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0015.wav",
         "NoteNum": 27
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY5025.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidConga0008.wav",
         "NoteNum": 28
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY7575.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0010.wav",
         "NoteNum": 29
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY0075.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0013.wav",
         "NoteNum": 30
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY1010.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0034.wav",
         "NoteNum": 31
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY5075.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiTom0007.wav",
         "NoteNum": 32
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY1025.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0019.wav",
         "NoteNum": 33
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY7550.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0038.wav",
         "NoteNum": 34
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY1000.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidConga0003.wav",
         "NoteNum": 35
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY5000.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiConga0006.wav",
         "NoteNum": 36
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY1050.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0006.wav",
         "NoteNum": 37
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY7525.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0008.wav",
         "NoteNum": 38
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CY/CY0025.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidTom0006.wav",
         "NoteNum": 39
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD0075.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0017.wav",
         "NoteNum": 40
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD5075.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowTom0003.wav",
         "NoteNum": 41
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD5050.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0005.wav",
         "NoteNum": 42
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD7550.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0020.wav",
         "NoteNum": 43
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD7575.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/OpenHihat0006.wav",
         "NoteNum": 44
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD5000.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0025.wav",
         "NoteNum": 45
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD1025.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/OpenHihat0002.wav",
         "NoteNum": 46
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD1075.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0012.wav",
         "NoteNum": 47
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD2525.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0029.wav",
         "NoteNum": 48
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD7500.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/Rimshot.wav",
         "NoteNum": 49
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD7510.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0001.wav",
         "NoteNum": 50
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD1000.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/ClosedHihat0002.wav",
         "NoteNum": 51
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD2510.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidTom0001.wav",
         "NoteNum": 52
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD0010.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0040.wav",
         "NoteNum": 53
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD0050.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0044.wav",
         "NoteNum": 54
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD1010.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowConga0005.wav",
         "NoteNum": 55
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD2500.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0009.wav",
         "NoteNum": 56
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD0025.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0003.wav",
         "NoteNum": 57
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD5010.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0036.wav",
         "NoteNum": 58
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD2550.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0007.wav",
         "NoteNum": 59
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD0000.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/Maraca.wav",
         "NoteNum": 60
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD7525.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiTom0004.wav",
         "NoteNum": 61
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD2575.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiTom0006.wav",
         "NoteNum": 62
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD1050.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0006.wav",
         "NoteNum": 63
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/SD/SD5025.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0014.wav",
         "NoteNum": 64
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/LC/LC25.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/OpenHihat0005.wav",
         "NoteNum": 65
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/LC/LC75.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowTom0008.wav",
         "NoteNum": 66
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/LC/LC00.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0021.wav",
         "NoteNum": 67
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/LC/LC10.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0023.wav",
         "NoteNum": 68
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/LC/LC50.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0017.wav",
         "NoteNum": 69
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CB/CB.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0016.wav",
         "NoteNum": 70
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/RS/RS.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/ClosedHihat0004.wav",
         "NoteNum": 71
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CH/CH.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/OpenHihat0003.wav",
         "NoteNum": 72
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CP/CP.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0029.wav",
         "NoteNum": 73
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/MA/MA.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0015.wav",
         "NoteNum": 74
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/OH/OH00.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiConga0007.wav",
         "NoteNum": 75
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/OH/OH75.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0036.wav",
         "NoteNum": 76
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/OH/OH50.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0041.wav",
         "NoteNum": 77
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/OH/OH10.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowTom0002.wav",
         "NoteNum": 78
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/OH/OH25.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0004.wav",
         "NoteNum": 79
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/HT/HT75.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0008.wav",
         "NoteNum": 80
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/HT/HT50.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0016.wav",
         "NoteNum": 81
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/HT/HT00.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidTom0004.wav",
         "NoteNum": 82
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/HT/HT10.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0020.wav",
         "NoteNum": 83
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/HT/HT25.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0009.wav",
         "NoteNum": 84
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/MT/MT75.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowConga0003.wav",
         "NoteNum": 85
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/MT/MT25.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiTom0001.wav",
         "NoteNum": 86
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/MT/MT00.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0032.wav",
         "NoteNum": 87
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/MT/MT50.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowConga0001.wav",
         "NoteNum": 88
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/MT/MT10.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0027.wav",
         "NoteNum": 89
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD7510.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/Cowbell.wav",
         "NoteNum": 90
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD2510.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidTom0005.wav",
         "NoteNum": 91
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD5010.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidConga0007.wav",
         "NoteNum": 92
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD1010.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0042.wav",
         "NoteNum": 93
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD5050.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0006.wav",
         "NoteNum": 94
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD7525.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/ClosedHihat0003.wav",
         "NoteNum": 95
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD1075.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0035.wav",
         "NoteNum": 96
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD2575.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowConga0007.wav",
         "NoteNum": 97
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD7500.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0028.wav",
         "NoteNum": 98
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD0075.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0002.wav",
         "NoteNum": 99
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD0000.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/Clap.wav",
         "NoteNum": 100
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD1050.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0022.wav",
         "NoteNum": 101
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD0050.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowTom0006.wav",
         "NoteNum": 102
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD2500.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0018.wav",
         "NoteNum": 103
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD1000.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidConga0005.wav",
         "NoteNum": 104
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD5000.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0019.wav",
         "NoteNum": 105
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD5025.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/Clav.wav",
         "NoteNum": 106
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD7575.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0021.wav",
         "NoteNum": 107
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD2550.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0042.wav",
         "NoteNum": 108
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD5075.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiConga0002.wav",
         "NoteNum": 109
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD2525.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiConga0008.wav",
         "NoteNum": 110
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD1025.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0019.wav",
         "NoteNum": 111
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD7550.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiConga0003.wav",
         "NoteNum": 112
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD0025.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0045.wav",
         "NoteNum": 113
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/BD/BD0010.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0011.wav",
         "NoteNum": 114
     },
     {
-        "FileName": "/home/tasm/Downloads/TR808WAV/CL/CL.WAV",
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidConga0004.wav",
         "NoteNum": 115
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiConga0009.wav",
+        "NoteNum": 116
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0026.wav",
+        "NoteNum": 117
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0020.wav",
+        "NoteNum": 118
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidConga0001.wav",
+        "NoteNum": 119
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0033.wav",
+        "NoteNum": 120
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0003.wav",
+        "NoteNum": 121
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0012.wav",
+        "NoteNum": 122
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0017.wav",
+        "NoteNum": 123
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0007.wav",
+        "NoteNum": 124
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0035.wav",
+        "NoteNum": 125
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0013.wav",
+        "NoteNum": 126
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0027.wav",
+        "NoteNum": 127
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0031.wav",
+        "NoteNum": 128
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0026.wav",
+        "NoteNum": 129
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiTom0002.wav",
+        "NoteNum": 130
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowConga0004.wav",
+        "NoteNum": 131
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0039.wav",
+        "NoteNum": 132
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowTom0004.wav",
+        "NoteNum": 133
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0002.wav",
+        "NoteNum": 134
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0004.wav",
+        "NoteNum": 135
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0022.wav",
+        "NoteNum": 136
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0022.wav",
+        "NoteNum": 137
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0033.wav",
+        "NoteNum": 138
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0018.wav",
+        "NoteNum": 139
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowConga0006.wav",
+        "NoteNum": 140
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/OpenHihat0004.wav",
+        "NoteNum": 141
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0008.wav",
+        "NoteNum": 142
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0010.wav",
+        "NoteNum": 143
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiConga0001.wav",
+        "NoteNum": 144
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowConga0008.wav",
+        "NoteNum": 145
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiTom0005.wav",
+        "NoteNum": 146
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/OpenHihat0007.wav",
+        "NoteNum": 147
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiTom0003.wav",
+        "NoteNum": 148
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0014.wav",
+        "NoteNum": 149
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowTom0007.wav",
+        "NoteNum": 150
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0003.wav",
+        "NoteNum": 151
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0021.wav",
+        "NoteNum": 152
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0030.wav",
+        "NoteNum": 153
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/MidTom0003.wav",
+        "NoteNum": 154
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0013.wav",
+        "NoteNum": 155
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/LowTom0005.wav",
+        "NoteNum": 156
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0010.wav",
+        "NoteNum": 157
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0037.wav",
+        "NoteNum": 158
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/KickDrum0023.wav",
+        "NoteNum": 159
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0014.wav",
+        "NoteNum": 160
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0031.wav",
+        "NoteNum": 161
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/OpenHihat0001.wav",
+        "NoteNum": 162
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0001.wav",
+        "NoteNum": 163
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0002.wav",
+        "NoteNum": 164
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/CYmbal0032.wav",
+        "NoteNum": 165
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiConga0004.wav",
+        "NoteNum": 166
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/HiConga0005.wav",
+        "NoteNum": 167
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0024.wav",
+        "NoteNum": 168
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0018.wav",
+        "NoteNum": 169
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/SnareDrum0025.wav",
+        "NoteNum": 170
+    },
+    {
+        "FileName": "/home/tasm/ir/src/tracker/cmd/samples/808_samples/ClosedHihat0001.wav",
+        "NoteNum": 171
     }
 ]

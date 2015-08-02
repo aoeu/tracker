@@ -16,19 +16,22 @@ func makeTestPattern() tracker.Pattern {
 
 	return tracker.Pattern{
 		tracker.Track{
-			tracker.Event{1, 1, gen1},
-			tracker.Event{2, 1, gen1},
-			tracker.Event{3, 1, gen1},
-			tracker.Event{4, 1, gen1},
-			tracker.Event{5, 1, gen1},
+			&tracker.Event{1, 127, gen1},
+			&tracker.Event{4, 127, gen1},
+			&tracker.Event{4, 127, gen1},
+			&tracker.Event{1, 127, gen1},
+			&tracker.Event{2, 127, gen1},
+			&tracker.Event{4, 127, gen1},
+			&tracker.Event{4, 127, gen1},
+			&tracker.Event{1, 127, gen1},
 		},
 		tracker.Track{
-			tracker.Event{64, 127, gen2},
-			tracker.Event{60, 127, gen2},
-			tracker.Event{67, 127, gen2},
+			&tracker.Event{0, 127, gen2},
+			&tracker.Event{2, 127, gen2},
+			&tracker.Event{3, 127, gen2},
 		},
 		tracker.Track{
-			tracker.Event{127, 127, gen3},
+			&tracker.Event{127, 127, gen3},
 		},
 	}
 }
