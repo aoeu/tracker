@@ -145,7 +145,7 @@ func (s *screen) editCell() error {
 	input := s.NewEditBox(20, 20, "NoteNumber Velocity")
 	var params [2]int
 	input = spacesRe.ReplaceAllString(input, " ")
-	vals := strings.Split(input, " ")
+	vals := strings.Split(strings.TrimSpace(input), " ")
 	if len(vals) < 2 {
 		return errors.New(fmt.Sprintf("Invalid input when editing cell: '%v'", input))	
 	}
