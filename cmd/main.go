@@ -12,7 +12,7 @@ func main() {
 		panic(err)
 	} else {
 		defer t.Exit()
-		t.ApplySampler("/home/tasm/ir/src/tracker/cmd/config/waves.json")
+		//t.ApplySampler("/home/tasm/ir/src/tracker/cmd/config/waves.json")
 		t.Run()
 	}
 	log.Println("Done.")

@@ -128,9 +128,10 @@ func termboxInit() error {
 
 //	Prints text to the screen
 func (s screen) prints(x, y int, n interface{}) {
+	fmtString := fmt.Sprintf("%%%vd", numWidth)
 	switch n.(type){
 	case int:
-		s.drawString(x, y, fmt.Sprintf("%3d", n))
+		s.drawString(x, y, fmt.Sprintf(fmtString, n))
 	default:
 		s.drawString(x, y, fmt.Sprint(n))
 	}
@@ -226,6 +227,10 @@ func (s screen) drawChar(x, y int, r rune) {
 	termbox.SetCell(x, y, r, s.fg, s.bg)
 }
 
+const (
+	numWidth = 4
+	trackWidth = 8
+)
 func (s *screen) drawPattern(x, y, hr, hc int, p Pattern) {
 	defer func() {		//TODO(Brad) - Don't make this a deferred func
 		s.fg = termbox.ColorBlue
@@ -234,18 +239,21 @@ func (s *screen) drawPattern(x, y, hr, hc int, p Pattern) {
 	for i, l := range p.GetLines() {
 		s.fg = termbox.ColorBlue
 		s.bg = termbox.ColorDefault
-		s.prints(x, y + 3 + i, i)
+		s.prints(x, y + numWidth + i, i)
 		for z, e := range l {
 			if i == hr && z == hc || i == s.lineOffset {
 				s.bg = termbox.ColorRed
 			} else {
 				s.bg = termbox.ColorDefault
 			}
+			x1 := x + (z * trackWidth) + 1
+			y1 := y + numWidth + i
 			s.fg = termbox.ColorDefault
-			s.prints(x + (z * 7) + 3, y + 3 + i, e.NoteNum)
+			s.prints(x1 + numWidth, y1, e.NoteNum)
 			s.fg = termbox.ColorGreen
-			s.prints(3 + x + (z * 7) + 3, y + 3 + i, e.Velocity)
+			s.prints(x1 + (numWidth *2), y1, e.Velocity)
 		}
+		
 	}
 	//	Function that calls function drawEvent to draw an event next to the previous event (from left to write)
 	//	Note, generator, effect, parameter
