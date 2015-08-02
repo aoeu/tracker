@@ -1,0 +1,18 @@
+panic: open cmd/testpattern.trkr: no such file or directory
+
+goroutine 1 [running]:
+main.main()
+	/home/brad/go/src/tracker/cmd/main.go:12 +0x7b
+
+goroutine 5 [syscall]:
+os/signal.loop()
+	/usr/local/go/src/os/signal/signal_unix.go:21 +0x1f
+created by os/signal.init·1
+	/usr/local/go/src/os/signal/signal_unix.go:27 +0x35
+
+goroutine 6 [select]:
+github.com/nsf/termbox-go.func·001()
+	/home/brad/go/src/github.com/nsf/termbox-go/api.go:87 +0x43b
+created by github.com/nsf/termbox-go.Init
+	/home/brad/go/src/github.com/nsf/termbox-go/api.go:106 +0x96a
+exit status 2
