@@ -1,18 +1,18 @@
 package main
 
 import (
-	"strings"
-	"fmt"
-	"log"
 	"bytes"
 	"encoding/gob"
 	"flag"
-	"io/ioutil"
+	"fmt"
 	"io"
+	"io/ioutil"
+	"log"
+	"strings"
 	"tracker"
 )
 
-func main()  {
+func main() {
 	var filePath string
 	flag.StringVar(&filePath, "in", "testpattern.trkr", "The file to decode and print as a test pattern")
 	flag.Parse()

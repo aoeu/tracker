@@ -1,9 +1,9 @@
 package main
 
 import (
-"fmt"
 	"encoding/gob"
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"tracker"

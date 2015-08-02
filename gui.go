@@ -1,18 +1,20 @@
 package tracker
 
-import ("github.com/nsf/termbox-go"
-			"fmt"
-			"strings"
-			"strconv"
-			)
+import (
+	"fmt"
+	"github.com/nsf/termbox-go"
+	"strconv"
+	"strings"
+)
 
 type dir int
 
-const(UP dir = iota
-		DOWN
-		LEFT
-		RIGHT)
-
+const (
+	UP dir = iota
+	DOWN
+	LEFT
+	RIGHT
+)
 
 func New() (*Tracker, error) {
 	if err := termboxInit(); err != nil {
@@ -28,20 +30,20 @@ func New() (*Tracker, error) {
 }
 
 type screen struct {
-	fg, bg		termbox.Attribute
-	editMode		bool
-	cX, cY		int
-	redraw chan bool
+	fg, bg         termbox.Attribute
+	editMode       bool
+	cX, cY         int
+	redraw         chan bool
 	currentPattern *Pattern // TODO(aoeu): Do we need the full PatternTable?
-	lineOffset int
+	lineOffset     int
 }
 
 func NewScreen() *screen {
-	return  &screen{
-		fg: termbox.ColorDefault,
-		bg: termbox.ColorDefault,
-		editMode: false,
-		redraw: make(chan bool),
+	return &screen{
+		fg:         termbox.ColorDefault,
+		bg:         termbox.ColorDefault,
+		editMode:   false,
+		redraw:     make(chan bool),
 		lineOffset: -1,
 	}
 }
@@ -70,7 +72,7 @@ func (s *screen) drawTable() {
 }
 
 func (s *screen) moveC(d dir) {
-	maxX, maxY :=  len(*s.currentPattern)-1, s.currentPattern.maxTrackLen()-1
+	maxX, maxY := len(*s.currentPattern)-1, s.currentPattern.maxTrackLen()-1
 	if s.editMode {
 		switch d {
 		case UP:
@@ -87,14 +89,14 @@ func (s *screen) moveC(d dir) {
 			}
 		case LEFT:
 			if s.cX > 0 {
-			s.cX--
+				s.cX--
 			}
 		}
 	}
 }
 
 const (
-	editMode = "EDIT MODE"
+	editMode     = "EDIT MODE"
 	playbackMode = "Press 'e' to edit."
 )
 
@@ -117,7 +119,7 @@ func termboxInit() error {
 //	Prints text to the screen
 func (s screen) prints(x, y int, n interface{}) {
 	fmtString := fmt.Sprintf("%%%vd", numWidth)
-	switch n.(type){
+	switch n.(type) {
 	case int:
 		s.drawString(x, y, fmt.Sprintf(fmtString, n))
 	default:
@@ -151,19 +153,19 @@ func (s *screen) editCell() {
 }
 
 func (t *Tracker) UserIn() {
-		keyEvents := make(chan termbox.Event)
+	keyEvents := make(chan termbox.Event)
 
-		go func() {
-			for {
-				e := termbox.PollEvent()
-				switch e.Type {
-				case termbox.EventKey:
-					keyEvents <- e
-				}
+	go func() {
+		for {
+			e := termbox.PollEvent()
+			switch e.Type {
+			case termbox.EventKey:
+				keyEvents <- e
 			}
-		}()
+		}
+	}()
 
-for {
+	for {
 		select {
 		case e := <-keyEvents:
 			switch e.Key {
@@ -190,7 +192,7 @@ for {
 					t.screen.refresh()
 				} else {
 					t.screen.editMode = true
-					// TODO(aoeu): t.Stop() ? 
+					// TODO(aoeu): t.Stop() ?
 				}
 			case 'p':
 				t.screen.editMode = false
@@ -206,7 +208,7 @@ for {
 
 func (s screen) drawString(x, y int, str string) {
 	for i, r := range str {
-		s.drawChar(x + i, y, r)
+		s.drawChar(x+i, y, r)
 	}
 }
 
@@ -215,18 +217,19 @@ func (s screen) drawChar(x, y int, r rune) {
 }
 
 const (
-	numWidth = 4
+	numWidth   = 4
 	trackWidth = 8
 )
+
 func (s *screen) drawPattern(x, y, hr, hc int, p Pattern) {
-	defer func() {		//TODO(Brad) - Don't make this a deferred func
+	defer func() { //TODO(Brad) - Don't make this a deferred func
 		s.fg = termbox.ColorBlue
 		s.bg = termbox.ColorDefault
 	}()
 	for i, l := range p.GetLines() {
 		s.fg = termbox.ColorBlue
 		s.bg = termbox.ColorDefault
-		s.prints(x, y + numWidth + i, i)
+		s.prints(x, y+numWidth+i, i)
 		for z, e := range l {
 			if i == hr && z == hc || i == s.lineOffset {
 				s.bg = termbox.ColorRed
@@ -236,11 +239,11 @@ func (s *screen) drawPattern(x, y, hr, hc int, p Pattern) {
 			x1 := x + (z * trackWidth) + 1
 			y1 := y + numWidth + i
 			s.fg = termbox.ColorDefault
-			s.prints(x1 + numWidth, y1, e.NoteNum)
+			s.prints(x1+numWidth, y1, e.NoteNum)
 			s.fg = termbox.ColorGreen
-			s.prints(x1 + (numWidth *2), y1, e.Velocity)
+			s.prints(x1+(numWidth*2), y1, e.Velocity)
 		}
-		
+
 	}
 	//	Function that calls function drawEvent to draw an event next to the previous event (from left to write)
 	//	Note, generator, effect, parameter
@@ -280,23 +283,23 @@ func (s screen) NewEditBox(x, y int, title string) (out string) {
 }
 
 func (s screen) printToEditBox(x, y int, in string) {
-	s.drawString(x + 2, y + 3, in)
-	s.drawString(x + 2 + len(in), y + 3, " ")
+	s.drawString(x+2, y+3, in)
+	s.drawString(x+2+len(in), y+3, " ")
 }
 
 func (s screen) drawEditBox(x, y int, title string) {
-	s.drawString(x + 3, y + 1, title)
-	for col := x; col < x + 10 + len(title); col++ {
+	s.drawString(x+3, y+1, title)
+	for col := x; col < x+10+len(title); col++ {
 		s.drawChar(col, y, '-')
-		s.drawChar(col, y + 4, '-')
+		s.drawChar(col, y+4, '-')
 	}
-	for row := y; row < y + 5; row++ {
+	for row := y; row < y+5; row++ {
 		s.drawChar(x, row, '|')
-		s.drawChar(x + 9 + len(title), row, '|')
+		s.drawChar(x+9+len(title), row, '|')
 	}
 }
 
-func (s screen) getInput() (rune) {
+func (s screen) getInput() rune {
 	switch e := termbox.PollEvent(); e.Type {
 	case termbox.EventKey:
 		switch e.Key {

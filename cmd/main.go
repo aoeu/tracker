@@ -2,8 +2,8 @@ package main
 
 import (
 	"log"
-	"tracker"
 	"runtime"
+	"tracker"
 )
 
 func main() {

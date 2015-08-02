@@ -219,7 +219,7 @@ func NewTracker(trkrFilepath string) (*Tracker, error) {
 
 func (p *Pattern) InsertAt(x, y int, e *Event) {
 	if len(*p) < x {
-		return	//TODO - Return error ???????
+		return //TODO - Return error ???????
 	}
 
 	t := (*p)[x]
@@ -231,7 +231,7 @@ func (p *Pattern) InsertAt(x, y int, e *Event) {
 		(*p)[x] = append(t, e)
 		fmt.Println("yea")
 	default:
-		k := make([]*Event, y - l)
+		k := make([]*Event, y-l)
 		for i := range k {
 			k[i] = &Event{}
 		}
