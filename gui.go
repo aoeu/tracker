@@ -304,9 +304,16 @@ func (s screen) drawEditBox(x, y int, title string) {
 		s.drawChar(col, y, '-')
 		s.drawChar(col, y+4, '-')
 	}
-	for row := y; row < y+5; row++ {
-		s.drawChar(x, row, '|')
-		s.drawChar(x+9+len(title), row, '|')
+	width := 9+len(title)
+	height := 5
+	for row := 0; row < height; row++ {
+		s.drawChar(x, y + row , '|')
+		if row > 2 && row < height - 1 {
+			for i := 1; i < width; i++ {
+				s.drawChar(x + i, y + row, ' ')
+			}
+		}
+		s.drawChar(x + width, y + row, '|')
 	}
 }
 
