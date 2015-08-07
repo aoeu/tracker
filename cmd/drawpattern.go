@@ -15,33 +15,33 @@ const (
 )
 
 var config = struct {
-	eventView
-	lineView
-	trackView
-	patternView
+	event
+	line
+	track
+	pattern
 }{
-	// Embedding a view struct within a fooView struct does cause
+	// Embedding a view struct within a foo struct does cause
 	// stuttering of the word "view" in config declaration, but turns
-	// the fooView constructor methods into one-liners.
-	eventView{view: view{
+	// the foo constructor methods into one-liners.
+	event{view: view{
 		fg:        termbox.ColorBlue,
 		bg:        termbox.ColorDefault,
-		delimiter: " \u00B7 ",
+		delimiter: " \u00B7",
 	}},
 
-	lineView{view: view{
+	line{view: view{
 		fg:        termbox.ColorRed,
 		bg:        termbox.ColorDefault,
 		delimiter: " | ",
 	}},
 
-	trackView{view: view{
+	track{view: view{
 		fg:        termbox.ColorGreen,
 		bg:        termbox.ColorDefault,
 		delimiter: " | ",
 	}},
 
-	patternView{view: view{
+	pattern{view: view{
 		fg: termbox.ColorYellow,
 		bg: termbox.ColorDefault,
 	}},
@@ -72,26 +72,26 @@ func main() {
 	// Draw an tracker.Event, with helper functions that draw sequences of characters.
 	// Event = pattern.track[0].event[0]
 	e := (*p)[0][0]
-	newEventView(e).draw(1, 1)
+	newEvent(e).draw(1, 1)
 
 	// Draw a tracker.Line - a series of tracker.Events that occur at the same moment in time.
 	lines := (*p).GetLines()
-	newLineView(lines[0]).draw(5, 5)
+	newLine(lines[0]).draw(5, 5)
 
 	// Draw a tracker.Track - a series of tracker.Events played through time (by one instrument).
 	track := (*p)[0]
-	newTrackView(track).draw(10, 7)
+	newTrack(track).draw(10, 7)
 
 	// Draw a tracker.Pattern - (a series of tracker.Tracks drawn side by side).
-	newPatternView(p).draw(32, 10)
+	newPattern(p).draw(32, 10)
 
 	// Redraw a tracker.Line over the tracker.Pattern
-	newLineView(lines[0]).draw(32, 10)
+	newLine(lines[0]).draw(32, 10)
 
 	// Redraw another tracker.Line over the tracker.Pattern to expose bugs.
 	/*
 		lineNum := 2
-		newLineView(lines[lineNum]).draw(32, 10 + lineNum)
+		newLine(lines[lineNum]).draw(32, 10 + lineNum)
 	*/
 
 	termbox.Flush()
@@ -104,18 +104,18 @@ type view struct {
 	delimiter     string
 }
 
-type patternView struct {
+type pattern struct {
 	*tracker.Pattern
 	view
 }
 
-func newPatternView(p *tracker.Pattern) *patternView {
-	return &patternView{p, config.patternView.view}
+func newPattern(p *tracker.Pattern) *pattern {
+	return &pattern{p, config.pattern.view}
 }
 
-func (pv *patternView) draw(x, y int) {
+func (pv *pattern) draw(x, y int) {
 	for _, t := range *pv.Pattern {
-		tv := newTrackView(t)
+		tv := newTrack(t)
 		tv.draw(x+pv.width, y)
 		pv.width += tv.width
 		if tv.height > pv.height {
@@ -124,19 +124,19 @@ func (pv *patternView) draw(x, y int) {
 	}
 }
 
-type trackView struct {
+type track struct {
 	tracker.Track
 	view
 }
 
-func newTrackView(t tracker.Track) *trackView {
-	return &trackView{t, config.trackView.view}
+func newTrack(t tracker.Track) *track {
+	return &track{t, config.track.view}
 }
 
-func (tv *trackView) draw(x, y int) {
+func (tv *track) draw(x, y int) {
 	// TODO(aoeu): Reset width and height every call to draw?
 	for _, e := range tv.Track {
-		ev := newEventView(e)
+		ev := newEvent(e)
 		ev.draw(x, y+tv.height)
 		if ev.width > tv.width {
 			tv.width = ev.width
@@ -149,18 +149,18 @@ func (tv *trackView) draw(x, y int) {
 	tv.width += len(tv.delimiter)
 }
 
-type lineView struct {
+type line struct {
 	tracker.Line
 	view
 }
 
-func newLineView(l tracker.Line) *lineView {
-	return &lineView{l, config.lineView.view}
+func newLine(l tracker.Line) *line {
+	return &line{l, config.line.view}
 }
 
-func (lv *lineView) draw(x, y int) {
+func (lv *line) draw(x, y int) {
 	for _, e := range lv.Line {
-		ev := newEventView(e)
+		ev := newEvent(e)
 		ev.draw(x+lv.width, y)
 		lv.width += ev.width
 		if ev.height > lv.height {
@@ -173,16 +173,16 @@ func (lv *lineView) draw(x, y int) {
 	}
 }
 
-type eventView struct {
+type event struct {
 	*tracker.Event
 	view
 }
 
-func newEventView(e *tracker.Event) *eventView {
-	return &eventView{e, config.eventView.view}
+func newEvent(e *tracker.Event) *event {
+	return &event{e, config.event.view}
 }
 
-func (ev *eventView) draw(x, y int) {
+func (ev *event) draw(x, y int) {
 	s := fmt.Sprintf("%v%v%v", ev.NoteNum, ev.delimiter, ev.Velocity)
 	ev.width = len(s)
 	ev.height = 1 + (1 * strings.Count(s, "\n"))
