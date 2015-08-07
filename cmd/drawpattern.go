@@ -29,15 +29,57 @@ func main() {
 		panic(err)
 	}
 	defer termbox.Close()
-	//termbox.SetCell(2, 3, 'A', fg, bg)
 
-	//	Event = pattern.track[0].event[0]
-	//e := (*p)[0][0]
-	// newEventView(e).draw(1, 1)
+	// Draw a character with termbox.
+	termbox.SetCell(2, 3, 'A', fg, bg)
+
+	// Draw an tracker.Event, with helper functions that draw sequences of characters.
+	// Event = pattern.track[0].event[0]
+	e := (*p)[0][0]
+	newEventView(e).draw(1, 1)
+
+	// Draw a tracker.Line - a series of tracker.Events that occur at the same moment in time.
 	lines := (*p).GetLines()
 	newLineView(lines[0]).draw(5, 5)
+
+	// Draw a tracker.Track - a series of tracker.Events played through time (by one instrument).
+	track := (*p)[0]
+	newTrackView(track).draw(10, 7)
+
 	termbox.Flush()
-	time.Sleep(2 * time.Second)
+	time.Sleep(5 * time.Second)
+}
+
+type trackView struct {
+	tracker.Track
+	width, height int
+	fg, bg        termbox.Attribute
+	delimiter     string
+}
+
+func newTrackView(t tracker.Track) *trackView {
+	return &trackView{
+		Track:     t,
+		fg:        termbox.ColorBlue,
+		bg:        termbox.ColorGreen,
+		delimiter: "|",
+	}
+}
+
+func (tv *trackView) draw(x, y int) {
+	// TODO(aoeu): Reset width and height every call to draw?
+	for _, e := range tv.Track {
+		ev := newEventView(e)
+		ev.draw(x, y+tv.height)
+		if ev.width > tv.width {
+			tv.width = ev.width
+		}
+		for i, r := range tv.delimiter {
+			termbox.SetCell(x+tv.width+i, y+tv.height, r, tv.fg, tv.bg)
+		}
+		tv.height += ev.height
+	}
+	tv.width += len(tv.delimiter)
 }
 
 type lineView struct {
@@ -48,7 +90,8 @@ type lineView struct {
 }
 
 func newLineView(l tracker.Line) *lineView {
-	return &lineView{Line: l,
+	return &lineView{
+		Line:      l,
 		fg:        termbox.ColorGreen,
 		bg:        termbox.ColorDefault,
 		delimiter: " | ",
@@ -78,7 +121,7 @@ type eventView struct {
 }
 
 func newEventView(e *tracker.Event) *eventView {
-	return &eventView{height: 1, width: 0, fg: fg, bg: bg, Event: e}
+	return &eventView{height: 1, width: 0, fg: termbox.ColorBlue, bg: bg, Event: e}
 }
 
 func (ev *eventView) draw(x, y int) {
