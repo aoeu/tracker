@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/nsf/termbox-go"
+	"strings"
 	"time"
 	"tracker"
 )
@@ -13,11 +14,42 @@ const (
 	bg = termbox.ColorDefault
 )
 
+var config = struct {
+	eventView
+	lineView
+	trackView
+	patternView
+}{
+	eventView{
+		fg: termbox.ColorBlue,
+		bg: termbox.ColorDefault,
+	},
+
+	lineView{
+		fg:        termbox.ColorRed,
+		bg:        termbox.ColorDefault,
+		delimiter: " | ",
+	},
+
+	trackView{
+		fg:        termbox.ColorGreen,
+		bg:        termbox.ColorDefault,
+		delimiter: " | ",
+	},
+
+	patternView{
+		fg: termbox.ColorYellow,
+		bg: termbox.ColorDefault,
+	},
+}
+
 func main() {
 	args := struct {
 		patternFile string
+		displayTime int
 	}{}
 	flag.StringVar(&args.patternFile, "pattern", "testpattern.trkr", "The pattern file to read.")
+	flag.IntVar(&args.displayTime, "sec", 5, "The number of seconds to show the pattern for.")
 	flag.Parse()
 
 	p, err := tracker.NewPattern(args.patternFile)
@@ -54,33 +86,32 @@ func main() {
 
 	// Redraw another tracker.Line over the tracker.Pattern to expose bugs.
 	/*
-	lineNum := 2
-	newLineView(lines[lineNum]).draw(32, 10 + lineNum)
+		lineNum := 2
+		newLineView(lines[lineNum]).draw(32, 10 + lineNum)
 	*/
 
 	termbox.Flush()
-	time.Sleep(5 * time.Second)
+	time.Sleep(time.Duration(args.displayTime) * time.Second)
 }
-
 
 type patternView struct {
 	*tracker.Pattern
 	width, height int
-	fg, bg termbox.Attribute
+	fg, bg        termbox.Attribute
 }
 
 func newPatternView(p *tracker.Pattern) *patternView {
 	return &patternView{
 		Pattern: p,
-		fg: fg,
-		bg: bg,
-	}	
+		fg:      config.patternView.fg,
+		bg:      config.patternView.bg,
+	}
 }
 
-func (pv *patternView ) draw(x, y int) {
+func (pv *patternView) draw(x, y int) {
 	for _, t := range *pv.Pattern {
 		tv := newTrackView(t)
-		tv.draw(x + pv.width, y)
+		tv.draw(x+pv.width, y)
 		pv.width += tv.width
 		if tv.height > pv.height {
 			pv.height = tv.height
@@ -98,8 +129,8 @@ type trackView struct {
 func newTrackView(t tracker.Track) *trackView {
 	return &trackView{
 		Track:     t,
-		fg:        termbox.ColorGreen,
-		bg:        bg,
+		fg:        config.trackView.fg,
+		bg:        config.trackView.bg,
 		delimiter: " | ",
 	}
 }
@@ -130,8 +161,8 @@ type lineView struct {
 func newLineView(l tracker.Line) *lineView {
 	return &lineView{
 		Line:      l,
-		fg:        termbox.ColorRed,
-		bg:        termbox.ColorDefault,
+		fg:        config.lineView.fg,
+		bg:        config.lineView.bg,
 		delimiter: " | ",
 	}
 
@@ -159,12 +190,17 @@ type eventView struct {
 }
 
 func newEventView(e *tracker.Event) *eventView {
-	return &eventView{height: 1, width: 0, fg: termbox.ColorBlue, bg: bg, Event: e}
+	return &eventView{
+		Event: e,
+		fg:    config.eventView.fg,
+		bg:    config.eventView.bg,
+	}
 }
 
 func (ev *eventView) draw(x, y int) {
 	s := fmt.Sprintf("%v %v", ev.NoteNum, ev.Velocity)
 	ev.width = len(s)
+	ev.height = 1 + (1 * strings.Count(s, "\n"))
 	for i, r := range s {
 		termbox.SetCell(x+i, y, r, ev.fg, ev.bg)
 	}
