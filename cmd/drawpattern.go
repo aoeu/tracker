@@ -49,6 +49,15 @@ func main() {
 	// Draw a tracker.Pattern - (a series of tracker.Tracks drawn side by side).
 	newPatternView(p).draw(32, 10)
 
+	// Redraw a tracker.Line over the tracker.Pattern
+	newLineView(lines[0]).draw(32, 10)
+
+	// Redraw another tracker.Line over the tracker.Pattern to expose bugs.
+	/*
+	lineNum := 2
+	newLineView(lines[lineNum]).draw(32, 10 + lineNum)
+	*/
+
 	termbox.Flush()
 	time.Sleep(5 * time.Second)
 }
@@ -79,7 +88,6 @@ func (pv *patternView ) draw(x, y int) {
 	}
 }
 
-
 type trackView struct {
 	tracker.Track
 	width, height int
@@ -92,7 +100,7 @@ func newTrackView(t tracker.Track) *trackView {
 		Track:     t,
 		fg:        termbox.ColorGreen,
 		bg:        bg,
-		delimiter: "|",
+		delimiter: " | ",
 	}
 }
 
@@ -122,7 +130,7 @@ type lineView struct {
 func newLineView(l tracker.Line) *lineView {
 	return &lineView{
 		Line:      l,
-		fg:        termbox.ColorGreen,
+		fg:        termbox.ColorRed,
 		bg:        termbox.ColorDefault,
 		delimiter: " | ",
 	}
