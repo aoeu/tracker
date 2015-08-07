@@ -46,9 +46,39 @@ func main() {
 	track := (*p)[0]
 	newTrackView(track).draw(10, 7)
 
+	// Draw a tracker.Pattern - (a series of tracker.Tracks drawn side by side).
+	newPatternView(p).draw(32, 10)
+
 	termbox.Flush()
 	time.Sleep(5 * time.Second)
 }
+
+
+type patternView struct {
+	*tracker.Pattern
+	width, height int
+	fg, bg termbox.Attribute
+}
+
+func newPatternView(p *tracker.Pattern) *patternView {
+	return &patternView{
+		Pattern: p,
+		fg: fg,
+		bg: bg,
+	}	
+}
+
+func (pv *patternView ) draw(x, y int) {
+	for _, t := range *pv.Pattern {
+		tv := newTrackView(t)
+		tv.draw(x + pv.width, y)
+		pv.width += tv.width
+		if tv.height > pv.height {
+			pv.height = tv.height
+		}
+	}
+}
+
 
 type trackView struct {
 	tracker.Track
@@ -60,8 +90,8 @@ type trackView struct {
 func newTrackView(t tracker.Track) *trackView {
 	return &trackView{
 		Track:     t,
-		fg:        termbox.ColorBlue,
-		bg:        termbox.ColorGreen,
+		fg:        termbox.ColorGreen,
+		bg:        bg,
 		delimiter: "|",
 	}
 }
