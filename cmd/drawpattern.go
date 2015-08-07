@@ -20,27 +20,31 @@ var config = struct {
 	trackView
 	patternView
 }{
-	eventView{
-		fg: termbox.ColorBlue,
-		bg: termbox.ColorDefault,
-	},
+	// Embedding a view struct within a fooView struct does cause
+	// stuttering of the word "view" in config declaration, but turns
+	// the fooView constructor methods into one-liners.
+	eventView{view: view{
+		fg:        termbox.ColorBlue,
+		bg:        termbox.ColorDefault,
+		delimiter: " \u00B7 ",
+	}},
 
-	lineView{
+	lineView{view: view{
 		fg:        termbox.ColorRed,
 		bg:        termbox.ColorDefault,
 		delimiter: " | ",
-	},
+	}},
 
-	trackView{
+	trackView{view: view{
 		fg:        termbox.ColorGreen,
 		bg:        termbox.ColorDefault,
 		delimiter: " | ",
-	},
+	}},
 
-	patternView{
+	patternView{view: view{
 		fg: termbox.ColorYellow,
 		bg: termbox.ColorDefault,
-	},
+	}},
 }
 
 func main() {
@@ -94,18 +98,19 @@ func main() {
 	time.Sleep(time.Duration(args.displayTime) * time.Second)
 }
 
-type patternView struct {
-	*tracker.Pattern
+type view struct {
 	width, height int
 	fg, bg        termbox.Attribute
+	delimiter     string
+}
+
+type patternView struct {
+	*tracker.Pattern
+	view
 }
 
 func newPatternView(p *tracker.Pattern) *patternView {
-	return &patternView{
-		Pattern: p,
-		fg:      config.patternView.fg,
-		bg:      config.patternView.bg,
-	}
+	return &patternView{p, config.patternView.view}
 }
 
 func (pv *patternView) draw(x, y int) {
@@ -121,18 +126,11 @@ func (pv *patternView) draw(x, y int) {
 
 type trackView struct {
 	tracker.Track
-	width, height int
-	fg, bg        termbox.Attribute
-	delimiter     string
+	view
 }
 
 func newTrackView(t tracker.Track) *trackView {
-	return &trackView{
-		Track:     t,
-		fg:        config.trackView.fg,
-		bg:        config.trackView.bg,
-		delimiter: " | ",
-	}
+	return &trackView{t, config.trackView.view}
 }
 
 func (tv *trackView) draw(x, y int) {
@@ -153,19 +151,11 @@ func (tv *trackView) draw(x, y int) {
 
 type lineView struct {
 	tracker.Line
-	width, height int
-	fg, bg        termbox.Attribute
-	delimiter     string
+	view
 }
 
 func newLineView(l tracker.Line) *lineView {
-	return &lineView{
-		Line:      l,
-		fg:        config.lineView.fg,
-		bg:        config.lineView.bg,
-		delimiter: " | ",
-	}
-
+	return &lineView{l, config.lineView.view}
 }
 
 func (lv *lineView) draw(x, y int) {
@@ -185,20 +175,15 @@ func (lv *lineView) draw(x, y int) {
 
 type eventView struct {
 	*tracker.Event
-	width, height int
-	fg, bg        termbox.Attribute
+	view
 }
 
 func newEventView(e *tracker.Event) *eventView {
-	return &eventView{
-		Event: e,
-		fg:    config.eventView.fg,
-		bg:    config.eventView.bg,
-	}
+	return &eventView{e, config.eventView.view}
 }
 
 func (ev *eventView) draw(x, y int) {
-	s := fmt.Sprintf("%v %v", ev.NoteNum, ev.Velocity)
+	s := fmt.Sprintf("%v%v%v", ev.NoteNum, ev.delimiter, ev.Velocity)
 	ev.width = len(s)
 	ev.height = 1 + (1 * strings.Count(s, "\n"))
 	for i, r := range s {
