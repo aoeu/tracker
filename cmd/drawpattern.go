@@ -94,6 +94,13 @@ func main() {
 		newLine(lines[lineNum]).draw(32, 10 + lineNum)
 	*/
 
+	// Redraw a tracker.Track next to itself a few times.
+	t := newTrack(track)
+	t.draw(64, 32)
+	t.draw(64 + t.width, 32)
+	t.draw(64 + t.width * 2, 32)
+	t.draw(64, 32 + t.height)
+
 	termbox.Flush()
 	time.Sleep(time.Duration(args.displayTime) * time.Second)
 }
@@ -114,6 +121,7 @@ func newPattern(p *tracker.Pattern) *pattern {
 }
 
 func (pv *pattern) draw(x, y int) {
+	pv.width, pv.height = 0, 0
 	for _, t := range *pv.Pattern {
 		tv := newTrack(t)
 		tv.draw(x+pv.width, y)
@@ -134,6 +142,7 @@ func newTrack(t tracker.Track) *track {
 }
 
 func (tv *track) draw(x, y int) {
+	tv.width, tv.height = 0, 0
 	// TODO(aoeu): Reset width and height every call to draw?
 	for _, e := range tv.Track {
 		ev := newEvent(e)
@@ -159,6 +168,7 @@ func newLine(l tracker.Line) *line {
 }
 
 func (lv *line) draw(x, y int) {
+	lv.width, lv.height = 0, 0
 	for _, e := range lv.Line {
 		ev := newEvent(e)
 		ev.draw(x+lv.width, y)
