@@ -35,14 +35,14 @@ func NewAudioGenerator(filepath string) (*AudioGenerator, error) {
 }
 
 func (a AudioGenerator) Play(e Event) {
-	go a.Sampler.Play(e.NoteNum, float32(e.Velocity)/127.0)
+	go a.Sampler.Play(int(e.NoteNum), float32(e.Velocity)/127.0)
 }
 
 func (a AudioGenerator) String() string {
 	return "Audio generator." // TODO(aoeu): Return something useful.
 }
 
-func NewTrack(g Generator, velocity int, notes ...int) *Track {
+func NewTrack(g Generator, velocity Velocity, notes ...NoteNum) *Track {
 	t := make(Track, len(notes))
 	for i := 0; i < len(t); i++ {
 		t[i] = &Event{Generator: g, NoteNum: notes[i], Velocity: velocity}

@@ -1,9 +1,12 @@
 package tracker
 
+type NoteNum int
+type Velocity int
+
 // An Event represents a musical event to occur at a point in time.
 type Event struct {
-	NoteNum  int
-	Velocity int
+	NoteNum
+	Velocity
 	Generator
 }
 

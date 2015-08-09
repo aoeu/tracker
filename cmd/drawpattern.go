@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"github.com/nsf/termbox-go"
-	"strings"
 	"time"
 	"tracker"
 )
@@ -15,6 +14,8 @@ const (
 )
 
 var config = struct {
+	noteNum
+	velocity
 	event
 	line
 	track
@@ -23,6 +24,16 @@ var config = struct {
 	// Embedding a view struct within a foo struct does cause
 	// stuttering of the word "view" in config declaration, but turns
 	// the foo constructor methods into one-liners.
+	noteNum{view: view{
+		fg: termbox.ColorBlue,
+		bg: termbox.ColorDefault,
+	}},
+
+	velocity{view: view{
+		fg: termbox.ColorCyan,
+		bg: termbox.ColorDefault,
+	}},
+
 	event{view: view{
 		fg:        termbox.ColorBlue,
 		bg:        termbox.ColorDefault,
@@ -97,9 +108,9 @@ func main() {
 	// Redraw a tracker.Track next to itself a few times.
 	t := newTrack(track)
 	t.draw(64, 32)
-	t.draw(64 + t.width, 32)
-	t.draw(64 + t.width * 2, 32)
-	t.draw(64, 32 + t.height)
+	t.draw(64+t.width, 32)
+	t.draw(64+t.width*2, 32)
+	t.draw(64, 32+t.height)
 
 	termbox.Flush()
 	time.Sleep(time.Duration(args.displayTime) * time.Second)
@@ -143,7 +154,6 @@ func newTrack(t tracker.Track) *track {
 
 func (tv *track) draw(x, y int) {
 	tv.width, tv.height = 0, 0
-	// TODO(aoeu): Reset width and height every call to draw?
 	for _, e := range tv.Track {
 		ev := newEvent(e)
 		ev.draw(x, y+tv.height)
@@ -193,11 +203,60 @@ func newEvent(e *tracker.Event) *event {
 }
 
 func (ev *event) draw(x, y int) {
-	s := fmt.Sprintf("%v%v%v", ev.NoteNum, ev.delimiter, ev.Velocity)
-	ev.width = len(s)
-	ev.height = 1 + (1 * strings.Count(s, "\n"))
+	ev.width, ev.height = 0, 0
+	n := newNoteNum(ev.NoteNum)
+	n.draw(x+ev.width, y)
+	ev.width += n.width
+	if n.height > ev.height {
+		ev.height = n.height
+	}
+	for i, r := range ev.delimiter {
+		termbox.SetCell(x+ev.width+i, y, r, ev.fg, ev.bg)
+		ev.width += i
+	}
+	v := newVelocity(ev.Velocity)
+	v.draw(x+ev.width, y)
+	ev.width += v.width
+	if v.height > ev.height {
+		v.height = ev.height
+	}
+}
+
+type noteNum struct {
+	tracker.NoteNum
+	view
+}
+
+func newNoteNum(n tracker.NoteNum) *noteNum {
+	return &noteNum{n, config.noteNum.view}
+}
+
+func (n *noteNum) draw(x, y int) {
+	n.width, n.height = 0, 0
+	s := fmt.Sprintf("%v", n.NoteNum)
+	n.width = len(s)
+	n.height = 1
 	for i, r := range s {
-		termbox.SetCell(x+i, y, r, ev.fg, ev.bg)
+		termbox.SetCell(x+i, y, r, n.fg, n.bg)
+	}
+}
+
+type velocity struct {
+	tracker.Velocity
+	view
+}
+
+func newVelocity(v tracker.Velocity) *velocity {
+	return &velocity{v, config.velocity.view}
+}
+
+func (v *velocity) draw(x, y int) {
+	v.width, v.height = 0, 0
+	s := fmt.Sprintf("%v", v.Velocity)
+	v.width = len(s)
+	v.height = 1
+	for i, r := range s {
+		termbox.SetCell(x+i, y, r, v.fg, v.bg)
 	}
 }
 

@@ -158,7 +158,7 @@ func (s *screen) editCell() error {
 			i++
 		}
 	}
-	e := &Event{NoteNum: params[0], Velocity: params[1]}
+	e := &Event{NoteNum: NoteNum(params[0]), Velocity: Velocity(params[1])}
 	(*s.currentPattern).InsertAt(s.cX, s.cY, e)
 	return nil
 }
