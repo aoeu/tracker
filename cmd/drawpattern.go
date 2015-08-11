@@ -14,6 +14,7 @@ const (
 )
 
 var config = struct {
+	screen
 	noteNum
 	velocity
 	event
@@ -21,6 +22,8 @@ var config = struct {
 	track
 	pattern
 }{
+	termScreen{},
+
 	// Embedding a view struct within a foo struct does cause
 	// stuttering of the word "view" in config declaration, but turns
 	// the foo constructor methods into one-liners.
@@ -237,7 +240,7 @@ func (n *noteNum) draw(x, y int) {
 	n.width = len(s)
 	n.height = 1
 	for i, r := range s {
-		termbox.SetCell(x+i, y, r, n.fg, n.bg)
+		config.screen.SetCell(x+i, y, r, n.fg, n.bg)
 	}
 }
 
@@ -256,14 +259,26 @@ func (v *velocity) draw(x, y int) {
 	v.width = len(s)
 	v.height = 1
 	for i, r := range s {
-		termbox.SetCell(x+i, y, r, v.fg, v.bg)
+		config.screen.SetCell(x+i, y, r, v.fg, v.bg)
 	}
 }
 
 func drawString(x, y int, s string) {
 	for i, r := range s {
-		termbox.SetCell(x+i, y, r, fg, bg)
+		config.screen.SetCell(x+i, y, r, fg, bg)
+		// termbox.SetCell(x+i, y, r, fg, bg)
 	}
+}
+
+// TODO(aoeu): A Stringer has a String() func, a Writer has a Write(), what has a SetCell() ?
+type screen interface {
+	SetCell(x, y int, r rune, fg, bg termbox.Attribute)
+}
+
+type termScreen struct{}
+
+func (t termScreen) SetCell(x, y int, r rune, fg, bg termbox.Attribute) {
+	termbox.SetCell(x, y, r, fg, bg)
 }
 
 /*
