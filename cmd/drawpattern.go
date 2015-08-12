@@ -63,11 +63,13 @@ var config = struct {
 
 func main() {
 	args := struct {
-		patternFile string
-		displayTime int
+		patternFile   string
+		displayTime   int
+		useMockScreen bool
 	}{}
 	flag.StringVar(&args.patternFile, "pattern", "testpattern.trkr", "The pattern file to read.")
 	flag.IntVar(&args.displayTime, "sec", 5, "The number of seconds to show the pattern for.")
+	flag.BoolVar(&args.useMockScreen, "mock", false, "Print a mock screen instead of drawing with termbox")
 	flag.Parse()
 
 	p, err := tracker.NewPattern(args.patternFile)
@@ -75,13 +77,18 @@ func main() {
 		panic(err)
 	}
 
-	if err := termbox.Init(); err != nil {
+	if args.useMockScreen {
+		config.screen = newMockScreen(200, 58)
+		args.displayTime = 0
+	}
+
+	if err := config.screen.Init(); err != nil {
 		panic(err)
 	}
-	defer termbox.Close()
+	defer config.screen.Close()
 
 	// Draw a character with termbox.
-	termbox.SetCell(2, 3, 'A', fg, bg)
+	config.screen.SetCell(2, 3, 'A', fg, bg)
 
 	// Draw an tracker.Event, with helper functions that draw sequences of characters.
 	// Event = pattern.track[0].event[0]
@@ -115,7 +122,7 @@ func main() {
 	t.draw(64+t.width*2, 32)
 	t.draw(64, 32+t.height)
 
-	termbox.Flush()
+	config.screen.Flush()
 	time.Sleep(time.Duration(args.displayTime) * time.Second)
 }
 
@@ -164,7 +171,7 @@ func (tv *track) draw(x, y int) {
 			tv.width = ev.width
 		}
 		for i, r := range tv.delimiter {
-			termbox.SetCell(x+tv.width+i, y+tv.height, r, tv.fg, tv.bg)
+			config.screen.SetCell(x+tv.width+i, y+tv.height, r, tv.fg, tv.bg)
 		}
 		tv.height += ev.height
 	}
@@ -270,15 +277,63 @@ func drawString(x, y int, s string) {
 	}
 }
 
-// TODO(aoeu): A Stringer has a String() func, a Writer has a Write(), what has a SetCell() ?
 type screen interface {
+	Init() error
+	Close()
 	SetCell(x, y int, r rune, fg, bg termbox.Attribute)
+	Flush()
 }
 
 type termScreen struct{}
 
+func (t termScreen) Init() error { return termbox.Init() }
+func (t termScreen) Close()      { termbox.Close() }
+func (t termScreen) Flush()      { termbox.Flush() }
 func (t termScreen) SetCell(x, y int, r rune, fg, bg termbox.Attribute) {
 	termbox.SetCell(x, y, r, fg, bg)
+}
+
+type mockScreen struct {
+	cells [][]rune
+}
+
+func newMockScreen(width, height int) *mockScreen {
+	m := &mockScreen{}
+	m.cells = make([][]rune, height)
+	for i, _ := range m.cells {
+		m.cells[i] = make([]rune, width)
+	}
+	return m
+}
+
+func (m *mockScreen) Init() error { return nil }
+
+func (m *mockScreen) Close() {}
+
+func (m *mockScreen) SetCell(x, y int, r rune, fg, bg termbox.Attribute) {
+	m.cells[y][x] = r
+}
+
+func (m *mockScreen) Flush() {
+	for x, row := range m.cells {
+		for y, r := range row {
+			if r == 0 {
+				m.cells[x][y] = ' '
+			}
+		}
+	}
+	for _, row := range m.cells {
+		fmt.Println(string(row))
+	}
+	m.clear()
+}
+
+func (m *mockScreen) clear() {
+	for x := 0; x < len(m.cells); x++ {
+		for y := 0; y < len(m.cells[x]); y++ {
+			m.cells[x][y] = 0
+		}
+	}
 }
 
 /*
