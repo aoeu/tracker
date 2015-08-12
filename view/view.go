@@ -6,239 +6,239 @@ import (
 	"tracker"
 )
 
-var config = newDefaultConfig()
+var Config = NewDefaultConfig()
 
-type viewConfig struct {
-	screen
-	noteNum
-	velocity
-	event
-	line
-	track
-	pattern
+type ViewConfig struct {
+	Screen
+	NoteNum
+	Velocity
+	Event
+	Line
+	Track
+	Pattern
 }
 
-func newDefaultConfig() *viewConfig {
-	return &viewConfig{
-		termScreen{},
+func NewDefaultConfig() *ViewConfig {
+	return &ViewConfig{
+		TermScreen{},
 
-		noteNum{view: view{
-			fg: termbox.ColorBlue,
-			bg: termbox.ColorDefault,
+		NoteNum{View: View{
+			Fg: termbox.ColorBlue,
+			Bg: termbox.ColorDefault,
 		}},
 
-		velocity{view: view{
-			fg: termbox.ColorCyan,
-			bg: termbox.ColorDefault,
+		Velocity{View: View{
+			Fg: termbox.ColorCyan,
+			Bg: termbox.ColorDefault,
 		}},
 
-		event{view: view{
-			fg:        termbox.ColorBlue,
-			bg:        termbox.ColorDefault,
+		Event{View: View{
+			Fg:        termbox.ColorBlue,
+			Bg:        termbox.ColorDefault,
 			delimiter: " \u00B7",
 		}},
 
-		line{view: view{
-			fg:        termbox.ColorRed,
-			bg:        termbox.ColorDefault,
+		Line{View: View{
+			Fg:        termbox.ColorRed,
+			Bg:        termbox.ColorDefault,
 			delimiter: " | ",
 		}},
 
-		track{view: view{
-			fg:        termbox.ColorGreen,
-			bg:        termbox.ColorDefault,
+		Track{View: View{
+			Fg:        termbox.ColorGreen,
+			Bg:        termbox.ColorDefault,
 			delimiter: " | ",
 		}},
 
-		pattern{view: view{
-			fg: termbox.ColorYellow,
-			bg: termbox.ColorDefault,
+		Pattern{View: View{
+			Fg: termbox.ColorYellow,
+			Bg: termbox.ColorDefault,
 		}},
 	}
 }
 
-type view struct {
-	width, height int
-	fg, bg        termbox.Attribute
+type View struct {
+	Width, Height int
+	Fg, Bg        termbox.Attribute
 	delimiter     string
 }
 
-type pattern struct {
+type Pattern struct {
 	*tracker.Pattern
-	view
+	View
 }
 
-func newPattern(p *tracker.Pattern) *pattern {
-	return &pattern{p, config.pattern.view}
+func NewPattern(p *tracker.Pattern) *Pattern {
+	return &Pattern{p, Config.Pattern.View}
 }
 
-func (pv *pattern) draw(x, y int) {
-	pv.width, pv.height = 0, 0
+func (pv *Pattern) Draw(x, y int) {
+	pv.Width, pv.Height = 0, 0
 	for _, t := range *pv.Pattern {
-		tv := newTrack(t)
-		tv.draw(x+pv.width, y)
-		pv.width += tv.width
-		if tv.height > pv.height {
-			pv.height = tv.height
+		tv := NewTrack(t)
+		tv.Draw(x+pv.Width, y)
+		pv.Width += tv.Width
+		if tv.Height > pv.Height {
+			pv.Height = tv.Height
 		}
 	}
 }
 
-type track struct {
+type Track struct {
 	tracker.Track
-	view
+	View
 }
 
-func newTrack(t tracker.Track) *track {
-	return &track{t, config.track.view}
+func NewTrack(t tracker.Track) *Track {
+	return &Track{t, Config.Track.View}
 }
 
-func (tv *track) draw(x, y int) {
-	tv.width, tv.height = 0, 0
+func (tv *Track) Draw(x, y int) {
+	tv.Width, tv.Height = 0, 0
 	for _, e := range tv.Track {
-		ev := newEvent(e)
-		ev.draw(x, y+tv.height)
-		if ev.width > tv.width {
-			tv.width = ev.width
+		ev := NewEvent(e)
+		ev.Draw(x, y+tv.Height)
+		if ev.Width > tv.Width {
+			tv.Width = ev.Width
 		}
 		for i, r := range tv.delimiter {
-			config.screen.SetCell(x+tv.width+i, y+tv.height, r, tv.fg, tv.bg)
+			Config.Screen.SetCell(x+tv.Width+i, y+tv.Height, r, tv.Fg, tv.Bg)
 		}
-		tv.height += ev.height
+		tv.Height += ev.Height
 	}
-	tv.width += len(tv.delimiter)
+	tv.Width += len(tv.delimiter)
 }
 
-type line struct {
+type Line struct {
 	tracker.Line
-	view
+	View
 }
 
-func newLine(l tracker.Line) *line {
-	return &line{l, config.line.view}
+func NewLine(l tracker.Line) *Line {
+	return &Line{l, Config.Line.View}
 }
 
-func (lv *line) draw(x, y int) {
-	lv.width, lv.height = 0, 0
+func (lv *Line) Draw(x, y int) {
+	lv.Width, lv.Height = 0, 0
 	for _, e := range lv.Line {
-		ev := newEvent(e)
-		ev.draw(x+lv.width, y)
-		lv.width += ev.width
-		if ev.height > lv.height {
-			lv.height = ev.height
+		ev := NewEvent(e)
+		ev.Draw(x+lv.Width, y)
+		lv.Width += ev.Width
+		if ev.Height > lv.Height {
+			lv.Height = ev.Height
 		}
 		for i, r := range lv.delimiter {
-			termbox.SetCell(x+lv.width+i, y, r, lv.fg, lv.bg)
+			termbox.SetCell(x+lv.Width+i, y, r, lv.Fg, lv.Bg)
 		}
-		lv.width += len(lv.delimiter)
+		lv.Width += len(lv.delimiter)
 	}
 }
 
-type event struct {
+type Event struct {
 	*tracker.Event
-	view
+	View
 }
 
-func newEvent(e *tracker.Event) *event {
-	return &event{e, config.event.view}
+func NewEvent(e *tracker.Event) *Event {
+	return &Event{e, Config.Event.View}
 }
 
-func (ev *event) draw(x, y int) {
-	ev.width, ev.height = 0, 0
-	n := newNoteNum(ev.NoteNum)
-	n.draw(x+ev.width, y)
-	ev.width += n.width
-	if n.height > ev.height {
-		ev.height = n.height
+func (ev *Event) Draw(x, y int) {
+	ev.Width, ev.Height = 0, 0
+	n := NewNoteNum(ev.NoteNum)
+	n.Draw(x+ev.Width, y)
+	ev.Width += n.Width
+	if n.Height > ev.Height {
+		ev.Height = n.Height
 	}
 	for i, r := range ev.delimiter {
-		termbox.SetCell(x+ev.width+i, y, r, ev.fg, ev.bg)
-		ev.width += i
+		termbox.SetCell(x+ev.Width+i, y, r, ev.Fg, ev.Bg)
+		ev.Width += i
 	}
-	v := newVelocity(ev.Velocity)
-	v.draw(x+ev.width, y)
-	ev.width += v.width
-	if v.height > ev.height {
-		v.height = ev.height
+	v := NewVelocity(ev.Velocity)
+	v.Draw(x+ev.Width, y)
+	ev.Width += v.Width
+	if v.Height > ev.Height {
+		v.Height = ev.Height
 	}
 }
 
-type noteNum struct {
+type NoteNum struct {
 	tracker.NoteNum
-	view
+	View
 }
 
-func newNoteNum(n tracker.NoteNum) *noteNum {
-	return &noteNum{n, config.noteNum.view}
+func NewNoteNum(n tracker.NoteNum) *NoteNum {
+	return &NoteNum{n, Config.NoteNum.View}
 }
 
-func (n *noteNum) draw(x, y int) {
-	n.width, n.height = 0, 0
+func (n *NoteNum) Draw(x, y int) {
+	n.Width, n.Height = 0, 0
 	s := fmt.Sprintf("%v", n.NoteNum)
-	n.width = len(s)
-	n.height = 1
+	n.Width = len(s)
+	n.Height = 1
 	for i, r := range s {
-		config.screen.SetCell(x+i, y, r, n.fg, n.bg)
+		Config.Screen.SetCell(x+i, y, r, n.Fg, n.Bg)
 	}
 }
 
-type velocity struct {
+type Velocity struct {
 	tracker.Velocity
-	view
+	View
 }
 
-func newVelocity(v tracker.Velocity) *velocity {
-	return &velocity{v, config.velocity.view}
+func NewVelocity(v tracker.Velocity) *Velocity {
+	return &Velocity{v, Config.Velocity.View}
 }
 
-func (v *velocity) draw(x, y int) {
-	v.width, v.height = 0, 0
+func (v *Velocity) Draw(x, y int) {
+	v.Width, v.Height = 0, 0
 	s := fmt.Sprintf("%v", v.Velocity)
-	v.width = len(s)
-	v.height = 1
+	v.Width = len(s)
+	v.Height = 1
 	for i, r := range s {
-		config.screen.SetCell(x+i, y, r, v.fg, v.bg)
+		Config.Screen.SetCell(x+i, y, r, v.Fg, v.Bg)
 	}
 }
 
-type screen interface {
+type Screen interface {
 	Init() error
 	Close()
-	SetCell(x, y int, r rune, fg, bg termbox.Attribute)
+	SetCell(x, y int, r rune, Fg, Bg termbox.Attribute)
 	Flush()
 }
 
-type termScreen struct{}
+type TermScreen struct{}
 
-func (t termScreen) Init() error { return termbox.Init() }
-func (t termScreen) Close()      { termbox.Close() }
-func (t termScreen) Flush()      { termbox.Flush() }
-func (t termScreen) SetCell(x, y int, r rune, fg, bg termbox.Attribute) {
-	termbox.SetCell(x, y, r, fg, bg)
+func (t TermScreen) Init() error { return termbox.Init() }
+func (t TermScreen) Close()      { termbox.Close() }
+func (t TermScreen) Flush()      { termbox.Flush() }
+func (t TermScreen) SetCell(x, y int, r rune, Fg, Bg termbox.Attribute) {
+	termbox.SetCell(x, y, r, Fg, Bg)
 }
 
-type mockScreen struct {
+type MockScreen struct {
 	cells [][]rune
 }
 
-func newMockScreen(width, height int) *mockScreen {
-	m := &mockScreen{}
-	m.cells = make([][]rune, height)
+func NewMockScreen(Width, Height int) *MockScreen {
+	m := &MockScreen{}
+	m.cells = make([][]rune, Height)
 	for i, _ := range m.cells {
-		m.cells[i] = make([]rune, width)
+		m.cells[i] = make([]rune, Width)
 	}
 	return m
 }
 
-func (m *mockScreen) Init() error { return nil }
+func (m *MockScreen) Init() error { return nil }
 
-func (m *mockScreen) Close() {}
+func (m *MockScreen) Close() {}
 
-func (m *mockScreen) SetCell(x, y int, r rune, fg, bg termbox.Attribute) {
+func (m *MockScreen) SetCell(x, y int, r rune, Fg, Bg termbox.Attribute) {
 	m.cells[y][x] = r
 }
 
-func (m *mockScreen) Flush() {
+func (m *MockScreen) Flush() {
 	for x, row := range m.cells {
 		for y, r := range row {
 			if r == 0 {
@@ -252,7 +252,7 @@ func (m *mockScreen) Flush() {
 	m.clear()
 }
 
-func (m *mockScreen) clear() {
+func (m *MockScreen) clear() {
 	for x := 0; x < len(m.cells); x++ {
 		for y := 0; y < len(m.cells[x]); y++ {
 			m.cells[x][y] = 0
