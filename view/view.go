@@ -23,13 +23,15 @@ func NewDefaultConfig() *ViewConfig {
 		TermScreen{},
 
 		NoteNum{View: View{
-			Fg: termbox.ColorBlue,
-			Bg: termbox.ColorDefault,
+			Fg:       termbox.ColorBlue,
+			Bg:       termbox.ColorDefault,
+			maxWidth: 4,
 		}},
 
 		Velocity{View: View{
 			Fg: termbox.ColorCyan,
 			Bg: termbox.ColorDefault,
+			maxWidth: 4,
 		}},
 
 		Event{View: View{
@@ -61,6 +63,7 @@ type View struct {
 	Width, Height int
 	Fg, Bg        termbox.Attribute
 	delimiter     string
+	maxWidth      int
 }
 
 type Pattern struct {
@@ -175,6 +178,9 @@ func NewNoteNum(n tracker.NoteNum) *NoteNum {
 func (n *NoteNum) Draw(x, y int) {
 	n.Width, n.Height = 0, 0
 	s := fmt.Sprintf("%v", n.NoteNum)
+	for i := 0; i < n.maxWidth-len(s); i++ {
+		s = " " + s
+	}
 	n.Width = len(s)
 	n.Height = 1
 	for i, r := range s {
@@ -194,6 +200,9 @@ func NewVelocity(v tracker.Velocity) *Velocity {
 func (v *Velocity) Draw(x, y int) {
 	v.Width, v.Height = 0, 0
 	s := fmt.Sprintf("%v", v.Velocity)
+	for i := 0; i < v.maxWidth-len(s); i++ {
+		s = " " + s
+	}
 	v.Width = len(s)
 	v.Height = 1
 	for i, r := range s {
