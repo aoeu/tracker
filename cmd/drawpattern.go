@@ -64,9 +64,9 @@ func main() {
 	// Redraw a tracker.Track next to itself a few times.
 	t := view.NewTrack(track)
 	t.Draw(64, 32)
-	t.Draw(64+t.Width, 32)
-	t.Draw(64+t.Width*2, 32)
-	t.Draw(64, 32+t.Height)
+	t.Draw(64+t.Width(), 32)
+	t.Draw(64+t.Width()*2, 32)
+	t.Draw(64, 32+t.Height())
 
 	screen.Flush()
 	time.Sleep(time.Duration(args.displayTime) * time.Second)
