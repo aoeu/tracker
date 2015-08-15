@@ -3,6 +3,7 @@ package view
 import (
 	"fmt"
 	"github.com/nsf/termbox-go"
+	"io"
 	"tracker"
 )
 
@@ -29,8 +30,8 @@ func NewDefaultConfig() *ViewConfig {
 		}},
 
 		Velocity{View: View{
-			Fg: termbox.ColorCyan,
-			Bg: termbox.ColorDefault,
+			Fg:       termbox.ColorCyan,
+			Bg:       termbox.ColorDefault,
 			maxwidth: 4,
 		}},
 
@@ -73,6 +74,7 @@ func (v View) Width() int {
 func (v View) Height() int {
 	return v.height
 }
+
 type Pattern struct {
 	*tracker.Pattern
 	View
@@ -145,7 +147,7 @@ func (tv *Track) DrawBuffered(x, y, maxTrackLen int) {
 		return
 	}
 	tv.width -= len(tv.delimiter)
-	for i := 0; i < maxTrackLen - len(tv.Track); i++ {
+	for i := 0; i < maxTrackLen-len(tv.Track); i++ {
 		ev := NewEvent(&tracker.Event{NoteNum: 77, Velocity: 777})
 		ev.Draw(x, y+tv.height)
 		if ev.width > tv.width {
@@ -158,8 +160,6 @@ func (tv *Track) DrawBuffered(x, y, maxTrackLen int) {
 	}
 	tv.width += len(tv.delimiter)
 }
-
-
 
 type Line struct {
 	tracker.Line
@@ -276,11 +276,12 @@ func (t TermScreen) SetCell(x, y int, r rune, Fg, Bg termbox.Attribute) {
 }
 
 type MockScreen struct {
+	w     io.Writer
 	cells [][]rune
 }
 
-func NewMockScreen(width, height int) *MockScreen {
-	m := &MockScreen{}
+func NewMockScreen(w io.Writer, width, height int) *MockScreen {
+	m := &MockScreen{w: w}
 	m.cells = make([][]rune, height)
 	for i, _ := range m.cells {
 		m.cells[i] = make([]rune, width)
@@ -305,7 +306,7 @@ func (m *MockScreen) Flush() {
 		}
 	}
 	for _, row := range m.cells {
-		fmt.Println(string(row))
+		fmt.Fprintln(m.w, string(row))
 	}
 	m.clear()
 }

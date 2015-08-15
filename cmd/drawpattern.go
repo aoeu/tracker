@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"os"
 	"time"
 	"tracker"
 	"tracker/view"
@@ -24,7 +25,7 @@ func main() {
 	}
 
 	if args.useMockScreen {
-		view.Config.Screen = view.NewMockScreen(200, 58)
+		view.Config.Screen = view.NewMockScreen(os.Stdout, 200, 58)
 		args.displayTime = 0
 	}
 
