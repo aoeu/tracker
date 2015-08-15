@@ -148,7 +148,7 @@ func (tv *Track) DrawBuffered(x, y, maxTrackLen int) {
 	}
 	tv.width -= len(tv.delimiter)
 	for i := 0; i < maxTrackLen-len(tv.Track); i++ {
-		ev := NewEvent(&tracker.Event{NoteNum: 77, Velocity: 777})
+		ev := NewEvent(&tracker.Event{})
 		ev.Draw(x, y+tv.height)
 		if ev.width > tv.width {
 			tv.width = ev.width
@@ -204,7 +204,7 @@ func (ev *Event) Draw(x, y int) {
 		ev.height = n.height
 	}
 	for i, r := range ev.delimiter {
-		termbox.SetCell(x+ev.width+i, y, r, ev.Fg, ev.Bg)
+		Config.Screen.SetCell(x+ev.width+i, y, r, ev.Fg, ev.Bg)
 		ev.width += i
 	}
 	v := NewVelocity(ev.Velocity)
@@ -227,7 +227,8 @@ func NewNoteNum(n tracker.NoteNum) *NoteNum {
 func (n *NoteNum) Draw(x, y int) {
 	n.width, n.height = 0, 0
 	s := fmt.Sprintf("%v", n.NoteNum)
-	for i := 0; i < n.maxwidth-len(s); i++ {
+	j := n.maxwidth - len(s)
+	for i := 0; i < j; i++ {
 		s = " " + s
 	}
 	n.width = len(s)
@@ -249,7 +250,8 @@ func NewVelocity(v tracker.Velocity) *Velocity {
 func (v *Velocity) Draw(x, y int) {
 	v.width, v.height = 0, 0
 	s := fmt.Sprintf("%v", v.Velocity)
-	for i := 0; i < v.maxwidth-len(s); i++ {
+	j := v.maxwidth - len(s)
+	for i := 0; i < j; i++ {
 		s = " " + s
 	}
 	v.width = len(s)
