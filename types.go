@@ -7,7 +7,7 @@ type Velocity int
 type Event struct {
 	NoteNum
 	Velocity
-	Generator
+	Generator // TODO(aoeu): Move generator to track.
 }
 
 // A Generator maps to a musical device that can play an Event.

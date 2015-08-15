@@ -94,6 +94,23 @@ func (pv *Pattern) Draw(x, y int) {
 	}
 }
 
+func (pv *Pattern) DrawBuffered(x, y int) {
+	maxTrackLen := 0
+	for _, t := range *pv.Pattern {
+		if len(t) > maxTrackLen {
+			maxTrackLen = len(t)
+		}
+	}
+	for _, t := range *pv.Pattern {
+		tv := NewTrack(t)
+		tv.DrawBuffered(x+pv.width, y, maxTrackLen)
+		pv.width += tv.width
+		if tv.height > pv.height {
+			pv.height = tv.height
+		}
+	}
+}
+
 type Track struct {
 	tracker.Track
 	View
@@ -118,6 +135,31 @@ func (tv *Track) Draw(x, y int) {
 	}
 	tv.width += len(tv.delimiter)
 }
+
+func (tv *Track) DrawBuffered(x, y, maxTrackLen int) {
+	tv.Draw(x, y)
+	switch l := len(tv.Track); {
+	case l > maxTrackLen:
+		panic("Track was drawn and has a length longer than the provided maximum.")
+	case l == maxTrackLen:
+		return
+	}
+	tv.width -= len(tv.delimiter)
+	for i := 0; i < maxTrackLen - len(tv.Track); i++ {
+		ev := NewEvent(&tracker.Event{NoteNum: 77, Velocity: 777})
+		ev.Draw(x, y+tv.height)
+		if ev.width > tv.width {
+			tv.width = ev.width
+		}
+		for i, r := range tv.delimiter {
+			Config.Screen.SetCell(x+tv.width+i, y+tv.height, r, tv.Fg, tv.Bg)
+		}
+		tv.height += ev.height
+	}
+	tv.width += len(tv.delimiter)
+}
+
+
 
 type Line struct {
 	tracker.Line

@@ -50,7 +50,7 @@ func main() {
 	view.NewTrack(track).Draw(10, 7)
 
 	// Draw a tracker.Pattern - (a series of tracker.Tracks Drawn side by side).
-	view.NewPattern(p).Draw(32, 10)
+	view.NewPattern(p).DrawBuffered(32, 10)
 
 	// Redraw a tracker.Line over the tracker.Pattern
 	view.NewLine(lines[0]).Draw(32, 10)
