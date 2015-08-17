@@ -7,6 +7,7 @@
 - What's the input mechanism to trigger a screen-wide redraw?
 - Draw a border around an entire pattern?
 - Add view for a pattern table itself.
+- Highlight views when drawing.
 
 ### Done
 
