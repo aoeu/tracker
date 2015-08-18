@@ -56,11 +56,11 @@ func main() {
 	// Redraw a tracker.Line over the tracker.Pattern
 	view.NewLine(lines[0]).Draw(32, 10)
 
-	// Redraw another tracker.Line over the tracker.Pattern to expose bugs.
-	/*
-		lineNum := 2
-		view.NewLine(lines[lineNum]).Draw(32, 10 + lineNum)
-	*/
+	// Draw another tracker.Line, but highlighted, over the tracker.Pattern.
+	lineNum := 2
+	l := view.NewLine(lines[lineNum])
+	l.Highlight()
+	l.Draw(32, 10+lineNum)
 
 	// Redraw a tracker.Track next to itself a few times.
 	t := view.NewTrack(track)

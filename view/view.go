@@ -11,6 +11,7 @@ var Config = NewDefaultConfig()
 
 type ViewConfig struct {
 	Screen
+	Highlight termbox.Attribute
 	NoteNum
 	Velocity
 	Event
@@ -22,6 +23,8 @@ type ViewConfig struct {
 func NewDefaultConfig() *ViewConfig {
 	return &ViewConfig{
 		TermScreen{},
+
+		termbox.ColorYellow,
 
 		NoteNum{View: View{
 			Fg:       termbox.ColorBlue,
@@ -65,6 +68,7 @@ type View struct {
 	Fg, Bg        termbox.Attribute
 	delimiter     string
 	maxwidth      int
+	highlight     bool
 }
 
 func (v View) Width() int {
@@ -73,6 +77,20 @@ func (v View) Width() int {
 
 func (v View) Height() int {
 	return v.height
+}
+
+type Highlighter interface {
+	Highlight()
+	ResetHighlight()
+}
+
+func (v *View) Highlight() {
+	v.highlight = true
+	v.Bg = Config.Highlight
+}
+
+func (v *View) ResetHighlight() {
+	v.highlight = false
 }
 
 type Pattern struct {
@@ -174,6 +192,10 @@ func (lv *Line) Draw(x, y int) {
 	lv.width, lv.height = 0, 0
 	for _, e := range lv.Line {
 		ev := NewEvent(e)
+		if lv.highlight {
+			ev.Highlight()
+			defer ev.ResetHighlight()
+		}
 		ev.Draw(x+lv.width, y)
 		lv.width += ev.width
 		if ev.height > lv.height {
@@ -198,6 +220,10 @@ func NewEvent(e *tracker.Event) *Event {
 func (ev *Event) Draw(x, y int) {
 	ev.width, ev.height = 0, 0
 	n := NewNoteNum(ev.NoteNum)
+	if ev.highlight {
+		n.Highlight()
+		defer n.ResetHighlight()
+	}
 	n.Draw(x+ev.width, y)
 	ev.width += n.width
 	if n.height > ev.height {
@@ -208,11 +234,20 @@ func (ev *Event) Draw(x, y int) {
 		ev.width += i
 	}
 	v := NewVelocity(ev.Velocity)
+	if ev.highlight {
+		v.Highlight()
+		defer v.ResetHighlight()
+	}
 	v.Draw(x+ev.width, y)
 	ev.width += v.width
 	if v.height > ev.height {
 		v.height = ev.height
 	}
+}
+
+func (ev *Event) ResetHighlight() {
+	ev.View.ResetHighlight()
+	ev.Bg = Config.Event.View.Bg
 }
 
 type NoteNum struct {
@@ -236,6 +271,11 @@ func (n *NoteNum) Draw(x, y int) {
 	for i, r := range s {
 		Config.Screen.SetCell(x+i, y, r, n.Fg, n.Bg)
 	}
+}
+
+func (n *NoteNum) ResetHighlight() {
+	n.View.ResetHighlight()
+	n.Bg = Config.NoteNum.View.Bg
 }
 
 type Velocity struct {
