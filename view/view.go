@@ -68,7 +68,7 @@ type View struct {
 	Fg, Bg        termbox.Attribute
 	delimiter     string
 	maxwidth      int
-	highlight     bool
+	highlighted   bool
 }
 
 func (v View) Width() int {
@@ -85,12 +85,12 @@ type Highlighter interface {
 }
 
 func (v *View) Highlight() {
-	v.highlight = true
+	v.highlighted = true
 	v.Bg = Config.Highlight
 }
 
 func (v *View) ResetHighlight() {
-	v.highlight = false
+	v.highlighted = false
 }
 
 type Pattern struct {
@@ -144,7 +144,7 @@ func (tv *Track) Draw(x, y int) {
 	tv.width, tv.height = 0, 0
 	for _, e := range tv.Track {
 		ev := NewEvent(e)
-		if tv.highlight {
+		if tv.highlighted {
 			ev.Highlight()
 			defer ev.ResetHighlight()
 		}
@@ -161,7 +161,7 @@ func (tv *Track) Draw(x, y int) {
 }
 
 func (tv *Track) Highlight() {
-	tv.highlight = true
+	tv.highlighted = true
 }
 
 func (tv *Track) DrawBuffered(x, y, maxTrackLen int) {
@@ -175,7 +175,7 @@ func (tv *Track) DrawBuffered(x, y, maxTrackLen int) {
 	tv.width -= len(tv.delimiter)
 	for i := 0; i < maxTrackLen-len(tv.Track); i++ {
 		ev := NewEvent(&tracker.Event{})
-		if tv.highlight {
+		if tv.highlighted {
 			ev.Highlight()
 			defer ev.ResetHighlight()
 		}
@@ -204,7 +204,7 @@ func (lv *Line) Draw(x, y int) {
 	lv.width, lv.height = 0, 0
 	for _, e := range lv.Line {
 		ev := NewEvent(e)
-		if lv.highlight {
+		if lv.highlighted {
 			ev.Highlight()
 			defer ev.ResetHighlight()
 		}
@@ -232,7 +232,7 @@ func NewEvent(e *tracker.Event) *Event {
 func (ev *Event) Draw(x, y int) {
 	ev.width, ev.height = 0, 0
 	n := NewNoteNum(ev.NoteNum)
-	if ev.highlight {
+	if ev.highlighted {
 		n.Highlight()
 		defer n.ResetHighlight()
 	}
@@ -246,7 +246,7 @@ func (ev *Event) Draw(x, y int) {
 		ev.width += i
 	}
 	v := NewVelocity(ev.Velocity)
-	if ev.highlight {
+	if ev.highlighted {
 		v.Highlight()
 		defer v.ResetHighlight()
 	}
