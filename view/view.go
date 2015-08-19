@@ -144,6 +144,10 @@ func (tv *Track) Draw(x, y int) {
 	tv.width, tv.height = 0, 0
 	for _, e := range tv.Track {
 		ev := NewEvent(e)
+		if tv.highlight {
+			ev.Highlight()
+			defer ev.ResetHighlight()
+		}
 		ev.Draw(x, y+tv.height)
 		if ev.width > tv.width {
 			tv.width = ev.width
@@ -154,6 +158,10 @@ func (tv *Track) Draw(x, y int) {
 		tv.height += ev.height
 	}
 	tv.width += len(tv.delimiter)
+}
+
+func (tv *Track) Highlight() {
+	tv.highlight = true
 }
 
 func (tv *Track) DrawBuffered(x, y, maxTrackLen int) {
@@ -167,6 +175,10 @@ func (tv *Track) DrawBuffered(x, y, maxTrackLen int) {
 	tv.width -= len(tv.delimiter)
 	for i := 0; i < maxTrackLen-len(tv.Track); i++ {
 		ev := NewEvent(&tracker.Event{})
+		if tv.highlight {
+			ev.Highlight()
+			defer ev.ResetHighlight()
+		}
 		ev.Draw(x, y+tv.height)
 		if ev.width > tv.width {
 			tv.width = ev.width

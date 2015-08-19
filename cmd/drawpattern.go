@@ -69,6 +69,13 @@ func main() {
 	t.Draw(64+t.Width()*2, 32)
 	t.Draw(64, 32+t.Height())
 
+	// Draw a tracker.Pattern, then highlight a track.
+	view.NewPattern(p).DrawBuffered(76, 10)
+	tv := view.NewTrack((*p)[0])
+	tv.Highlight()
+	tv.Draw(88,10)
+
 	screen.Flush()
+
 	time.Sleep(time.Duration(args.displayTime) * time.Second)
 }
