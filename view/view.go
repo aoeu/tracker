@@ -372,3 +372,30 @@ func (m *MockScreen) clear() {
 		}
 	}
 }
+
+type UI struct {
+	*tracker.PatternTable
+	Selection
+}
+
+func NewUI(p *tracker.PatternTable) *UI {
+	ui := &UI{PatternTable: p}
+	if len(*p) > 0 {
+		ui.Selection.Pattern = (*p)[0]
+	}
+	return ui
+}
+
+type Selection struct {
+	*tracker.Pattern
+	LineOffset int
+}
+
+func (ui *UI) Draw() {
+	x, y := 4, 2 // TODO(aoeu): Specify where to draw components in some sort of UI configuration.
+	pv := NewPattern(ui.Selection.Pattern)
+	pv.DrawBuffered(x, y)
+	lv := NewLine(pv.Pattern.GetLine(ui.LineOffset))
+	lv.Highlight()
+	lv.Draw(x, y+ui.Selection.LineOffset)
+}
