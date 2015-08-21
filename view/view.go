@@ -376,19 +376,43 @@ func (m *MockScreen) clear() {
 type UI struct {
 	*tracker.PatternTable
 	Selection
+	Screen
+	userInput chan termbox.Key
+	quit      chan bool
+}
+
+type Selection struct {
+	*tracker.Pattern
+	LineOffset int
 }
 
 func NewUI(p *tracker.PatternTable) *UI {
-	ui := &UI{PatternTable: p}
+	ui := &UI{PatternTable: p,
+		Screen:    Config.Screen,
+		userInput: make(chan termbox.Key),
+		quit:      make(chan bool, 1),
+	}
 	if len(*p) > 0 {
 		ui.Selection.Pattern = (*p)[0]
 	}
 	return ui
 }
 
-type Selection struct {
-	*tracker.Pattern
-	LineOffset int
+
+func (ui *UI) Run() {
+	if err := ui.Screen.Init(); err != nil {
+		panic(err)
+	}
+	ui.Draw()
+	go ui.pollInput()
+	for {
+		select {
+		case k := <-ui.userInput:
+			ui.processKey(k)
+		case <-ui.quit:
+			return
+		}
+	}
 }
 
 func (ui *UI) Draw() {
@@ -398,4 +422,36 @@ func (ui *UI) Draw() {
 	lv := NewLine(pv.Pattern.GetLine(ui.LineOffset))
 	lv.Highlight()
 	lv.Draw(x, y+ui.Selection.LineOffset)
+	ui.Screen.Flush()
+}
+
+func (ui *UI) pollInput() {
+	for {
+		// TODO(aoeu): Abstract away calling termbox directly, make it clear that poll blocks.
+		switch e := termbox.PollEvent(); e.Type {
+		case termbox.EventKey:
+			ui.userInput <- e.Key
+			return
+		}
+	}
+}
+
+func (ui *UI) processKey(k termbox.Key) {
+	switch k {
+	case Controls.Exit:
+		ui.Screen.Close()
+		ui.quit <- true
+	}
+}
+
+var Controls = NewDefaultUIControls()
+
+type UIControls struct {
+	Exit termbox.Key
+}
+
+func NewDefaultUIControls() *UIControls {
+	return &UIControls{
+		Exit: termbox.KeyEsc,
+	}
 }

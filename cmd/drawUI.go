@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"os"
-	"time"
 	"tracker"
 	"tracker/view"
 )
@@ -29,21 +28,8 @@ func main() {
 		args.displayTime = 0
 	}
 
-	screen := view.Config.Screen
-	if err := screen.Init(); err != nil {
-		panic(err)
-	}
-	defer screen.Close()
-	defer time.Sleep(time.Duration(args.displayTime) * time.Second)
-
 	pt := make(tracker.PatternTable, 1)
 	pt[0] = p
 	ui := view.NewUI(&pt)
-	for i, _ := range p.GetLines() {
-		ui.Selection.LineOffset = i
-		ui.Draw()
-		screen.Flush()
-		time.Sleep(1 * time.Second)
-	}
-
+	ui.Run()
 }
