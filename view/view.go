@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/nsf/termbox-go"
 	"io"
+	"log"
+	"os"
 	"tracker"
 )
 
@@ -373,31 +375,38 @@ func (m *MockScreen) clear() {
 	}
 }
 
+type selection struct {
+	Pattern int
+	Line    int
+}
+
 type UI struct {
 	*tracker.PatternTable
-	Selection
+	selection
 	Screen
 	userInput chan termbox.Key
 	quit      chan bool
-}
-
-type Selection struct {
-	*tracker.Pattern
-	LineOffset int
+	*tracker.Player
+	*log.Logger
 }
 
 func NewUI(p *tracker.PatternTable) *UI {
 	ui := &UI{PatternTable: p,
 		Screen:    Config.Screen,
-		userInput: make(chan termbox.Key),
+		userInput: make(chan termbox.Key, 1),
 		quit:      make(chan bool, 1),
+		Player:    tracker.InitPlayer(*p),
+	}
+	l, err := os.Create("/tmp/trkr.log")
+	ui.Logger = log.New(l, "", 0)
+	if err != nil {
+		panic(err)
 	}
 	if len(*p) > 0 {
-		ui.Selection.Pattern = (*p)[0]
+		ui.selection.Pattern = 0
 	}
 	return ui
 }
-
 
 func (ui *UI) Run() {
 	if err := ui.Screen.Init(); err != nil {
@@ -408,7 +417,16 @@ func (ui *UI) Run() {
 	for {
 		select {
 		case k := <-ui.userInput:
+			ui.Logger.Println("Processing a key " + string(k))
 			ui.processKey(k)
+		case <-ui.Player.Clock:
+			ui.Logger.Println("ui.Run(): Received clock pulse.")
+			ui.selection.Line++
+			p := (*ui.PatternTable)[ui.selection.Pattern]
+			if ui.selection.Line >= len(p.GetLines()) {
+				ui.selection.Line = -1
+			}
+			ui.Draw()
 		case <-ui.quit:
 			return
 		}
@@ -417,11 +435,13 @@ func (ui *UI) Run() {
 
 func (ui *UI) Draw() {
 	x, y := 4, 2 // TODO(aoeu): Specify where to draw components in some sort of UI configuration.
-	pv := NewPattern(ui.Selection.Pattern)
+	pv := NewPattern((*ui.PatternTable)[ui.selection.Pattern])
 	pv.DrawBuffered(x, y)
-	lv := NewLine(pv.Pattern.GetLine(ui.LineOffset))
-	lv.Highlight()
-	lv.Draw(x, y+ui.Selection.LineOffset)
+	if ui.selection.Line >= 0 {
+		lv := NewLine(pv.Pattern.GetLine(ui.Line))
+		lv.Highlight()
+		lv.Draw(x, y+ui.selection.Line)
+	}
 	ui.Screen.Flush()
 }
 
@@ -431,7 +451,6 @@ func (ui *UI) pollInput() {
 		switch e := termbox.PollEvent(); e.Type {
 		case termbox.EventKey:
 			ui.userInput <- e.Key
-			return
 		}
 	}
 }
@@ -441,17 +460,23 @@ func (ui *UI) processKey(k termbox.Key) {
 	case Controls.Exit:
 		ui.Screen.Close()
 		ui.quit <- true
+	case Controls.Playback:
+		ui.Player.TogglePlayback()
+		ui.selection.Line = -1
+		ui.Draw()
 	}
 }
 
 var Controls = NewDefaultUIControls()
 
 type UIControls struct {
-	Exit termbox.Key
+	Exit     termbox.Key
+	Playback termbox.Key
 }
 
 func NewDefaultUIControls() *UIControls {
 	return &UIControls{
-		Exit: termbox.KeyEsc,
+		Exit:     termbox.KeyEsc,
+		Playback: termbox.KeySpace,
 	}
 }

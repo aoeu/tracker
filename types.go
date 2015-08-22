@@ -33,11 +33,6 @@ type Pattern []Track
 // of as playing an entire song.
 type PatternTable []*Pattern
 
-type Player struct {
-	BPM int
-	PatternTable
-}
-
 type Tracker struct {
 	screen    *screen
 	Player    *Player

@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-	runtime.GOMAXPROCS(runtime.NumCPU())
 	f, err := os.OpenFile("errors.log", os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		panic(err)
