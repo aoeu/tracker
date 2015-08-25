@@ -38,7 +38,7 @@ func (p *Player) Play() {
 	defer func() { p.isPlaying = false }()
 	beatLen := p.nsPerBeat()
 	for _, pattern := range p.PatternTable {
-		for _, line := range pattern.GetLines() {
+		for _, line := range pattern.Lines() {
 			p.Clock <- time.Now()
 			for _, e := range line {
 				if e.Generator != nil {

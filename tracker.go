@@ -108,14 +108,14 @@ func (p Pattern) GetLine(offset int) Line {
 	return l
 }
 
-// GetLines returns a series of Line types
+// Lines returns a series of Line types
 // containing the Events associated with all of
 // the Tracks in a Pattern.
 //
 // Any Track that is shorter in length than others
 // in the pattern is still still represented in a
 // respective Line with empty Event values (as padding).
-func (p Pattern) GetLines() []Line {
+func (p Pattern) Lines() []Line {
 	maxTrackLen := p.maxTrackLen()
 	l := make([]Line, maxTrackLen)
 	for i := range l {
@@ -159,7 +159,7 @@ func (t *Tracker) Play() {
 	// TODO(aoeu): Can pieces of this be decoupled from Tracker?
 	nsPerBeat := 60000000000 / t.Player.BPM
 	for _, pattern := range t.Player.PatternTable {
-		for _, line := range pattern.GetLines() {
+		for _, line := range pattern.Lines() {
 			t.screen.lineOffset += 1
 			t.screen.redraw <- true
 			for _, e := range line {

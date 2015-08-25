@@ -27,8 +27,8 @@ var testPattern = Pattern{
 	},
 }
 
-func TestGetLines(t *testing.T) {
-	lines := testPattern.GetLines()
+func TestLines(t *testing.T) {
+	lines := testPattern.Lines()
 	if len(lines) != 5 {
 		t.Error("Expected 5 Lines but actual was %v", len(lines))
 	}

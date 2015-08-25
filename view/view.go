@@ -423,7 +423,7 @@ func (ui *UI) Run() {
 			ui.Logger.Println("ui.Run(): Received clock pulse.")
 			ui.selection.Line++
 			p := (*ui.PatternTable)[ui.selection.Pattern]
-			if ui.selection.Line >= len(p.GetLines()) {
+			if ui.selection.Line >= len(p.Lines()) {
 				ui.selection.Line = -1
 			}
 			ui.Draw()
@@ -465,7 +465,7 @@ func (ui *UI) processKey(k termbox.Key) {
 		ui.selection.Line = -1
 		ui.Draw()
 	case Controls.Forward:
-		if len(ui.currentPattern().GetLines())-1 > ui.selection.Line {
+		if len(ui.currentPattern().Lines())-1 > ui.selection.Line {
 			ui.selection.Line++
 			ui.Draw()
 		}

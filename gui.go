@@ -237,7 +237,7 @@ func (s *screen) drawPattern(x, y, hr, hc int, p Pattern) {
 		s.fg = termbox.ColorBlue
 		s.bg = termbox.ColorDefault
 	}()
-	for i, l := range p.GetLines() {
+	for i, l := range p.Lines() {
 		s.fg = termbox.ColorBlue
 		s.bg = termbox.ColorDefault
 		s.prints(x, y+numWidth+i, i)
