@@ -464,7 +464,21 @@ func (ui *UI) processKey(k termbox.Key) {
 		ui.Player.TogglePlayback()
 		ui.selection.Line = -1
 		ui.Draw()
+	case Controls.Forward:
+		if len(ui.currentPattern().GetLines())-1 > ui.selection.Line {
+			ui.selection.Line++
+			ui.Draw()
+		}
+	case Controls.Backward:
+		if ui.selection.Line > 0 {
+			ui.selection.Line--
+			ui.Draw()
+		}
 	}
+}
+
+func (ui *UI) currentPattern() *tracker.Pattern {
+	return (*ui.PatternTable)[ui.selection.Pattern]
 }
 
 var Controls = NewDefaultUIControls()
@@ -472,11 +486,15 @@ var Controls = NewDefaultUIControls()
 type UIControls struct {
 	Exit     termbox.Key
 	Playback termbox.Key
+	Forward termbox.Key
+	Backward termbox.Key
 }
 
 func NewDefaultUIControls() *UIControls {
 	return &UIControls{
 		Exit:     termbox.KeyEsc,
 		Playback: termbox.KeySpace,
+		Forward: termbox.KeyArrowDown,
+		Backward: termbox.KeyArrowUp,
 	}
 }
